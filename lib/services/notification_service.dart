@@ -198,8 +198,8 @@ class NotificationService {
 
     final now = DateTime.now();
 
-    // Schedule for today and tomorrow
-    for (int dayOffset = 0; dayOffset <= 1; dayOffset++) {
+    // Schedule for the next 7 days ahead (35 prayer alarms queued)
+    for (int dayOffset = 0; dayOffset < 7; dayOffset++) {
       final date = now.add(Duration(days: dayOffset));
       final prayerTimes = PrayerTimesService.getPrayerTimes(
         latitude: latitude,
@@ -208,11 +208,11 @@ class NotificationService {
       );
 
       final list = [
-        {'prayer': Prayer.fajr, 'time': prayerTimes.fajr, 'enabled': notifyFajr, 'sound': fajrSound ?? soundType, 'id': 100 + dayOffset * 10 + 1},
-        {'prayer': Prayer.dhuhr, 'time': prayerTimes.dhuhr, 'enabled': notifyDhuhr, 'sound': dhuhrSound ?? soundType, 'id': 100 + dayOffset * 10 + 2},
-        {'prayer': Prayer.asr, 'time': prayerTimes.asr, 'enabled': notifyAsr, 'sound': asrSound ?? soundType, 'id': 100 + dayOffset * 10 + 3},
-        {'prayer': Prayer.maghrib, 'time': prayerTimes.maghrib, 'enabled': notifyMaghrib, 'sound': maghribSound ?? soundType, 'id': 100 + dayOffset * 10 + 4},
-        {'prayer': Prayer.isha, 'time': prayerTimes.isha, 'enabled': notifyIsha, 'sound': ishaSound ?? soundType, 'id': 100 + dayOffset * 10 + 5},
+        {'prayer': Prayer.fajr, 'time': prayerTimes.fajr, 'enabled': notifyFajr, 'sound': fajrSound ?? soundType, 'id': (dayOffset + 1) * 100 + 1},
+        {'prayer': Prayer.dhuhr, 'time': prayerTimes.dhuhr, 'enabled': notifyDhuhr, 'sound': dhuhrSound ?? soundType, 'id': (dayOffset + 1) * 100 + 2},
+        {'prayer': Prayer.asr, 'time': prayerTimes.asr, 'enabled': notifyAsr, 'sound': asrSound ?? soundType, 'id': (dayOffset + 1) * 100 + 3},
+        {'prayer': Prayer.maghrib, 'time': prayerTimes.maghrib, 'enabled': notifyMaghrib, 'sound': maghribSound ?? soundType, 'id': (dayOffset + 1) * 100 + 4},
+        {'prayer': Prayer.isha, 'time': prayerTimes.isha, 'enabled': notifyIsha, 'sound': ishaSound ?? soundType, 'id': (dayOffset + 1) * 100 + 5},
       ];
 
       for (final item in list) {

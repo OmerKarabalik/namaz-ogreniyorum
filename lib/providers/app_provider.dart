@@ -64,12 +64,12 @@ class AppProvider extends ChangeNotifier {
   bool _notifyAsr = true;
   bool _notifyMaghrib = true;
   bool _notifyIsha = true;
-  String _adhanSoundType = 'auto'; // 'auto', 'normal', 'fast', 'emotional', 'chime', 'silent'
+  String _adhanSoundType = 'normal'; // 'normal', 'fast', 'emotional', 'auto', 'chime', 'silent'
 
   String _fajrSound = 'normal';
   String _dhuhrSound = 'normal';
   String _asrSound = 'normal';
-  String _maghribSound = 'fast';
+  String _maghribSound = 'normal';
   String _ishaSound = 'normal';
 
   bool get isNotificationsEnabled => _isNotificationsEnabled;
@@ -136,12 +136,12 @@ class AppProvider extends ChangeNotifier {
       _notifyAsr = prefs.getBool('notif_asr') ?? true;
       _notifyMaghrib = prefs.getBool('notif_maghrib') ?? true;
       _notifyIsha = prefs.getBool('notif_isha') ?? true;
-      _adhanSoundType = prefs.getString('adhan_sound_type') ?? 'auto';
+      _adhanSoundType = prefs.getString('adhan_sound_type') ?? 'normal';
 
       _fajrSound = prefs.getString('sound_fajr') ?? 'normal';
       _dhuhrSound = prefs.getString('sound_dhuhr') ?? 'normal';
       _asrSound = prefs.getString('sound_asr') ?? 'normal';
-      _maghribSound = prefs.getString('sound_maghrib') ?? 'fast';
+      _maghribSound = prefs.getString('sound_maghrib') ?? 'normal';
       _ishaSound = prefs.getString('sound_isha') ?? 'normal';
       
       notifyListeners();
