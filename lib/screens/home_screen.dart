@@ -72,8 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final prefs = await SharedPreferences.getInstance();
       final hasShownNotice = prefs.getBool('has_shown_ad_notice') ?? false;
+      final setupCompleted = prefs.getBool('setup_completed') ?? false;
       
-      if (!hasShownNotice) {
+      // Sadece kurulumu daha önce tamamlamış mevcut kullanıcılar için ana sayfada göster.
+      // Sıfır kurulumda dil seçimi yapıldıktan hemen sonra kullanıcının seçtiği dilde gösterilir.
+      if (!hasShownNotice && setupCompleted) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (!mounted) return;
           _showAdNoticeDialog();
@@ -84,63 +87,65 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _showAdNoticeDialog() {
+  Future<void> _showAdNoticeDialog([AppProvider? customProvider]) async {
     if (!mounted) return;
     try {
-      final appProvider = Provider.of<AppProvider>(context, listen: false);
+      final appProvider = customProvider ?? Provider.of<AppProvider>(context, listen: false);
       final isDark = appProvider.isDarkMode;
 
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          backgroundColor: isDark ? AppColors.darkEmerald : Colors.white,
-          title: Row(
-            children: [
-              const Icon(Icons.info_outline, color: AppColors.premiumGold, size: 28),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Text(
-                  appProvider.translate('ad_notice_title'),
-                  style: TextStyle(
-                    color: isDark ? Colors.white : AppColors.darkEmerald,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            backgroundColor: isDark ? AppColors.darkEmerald : Colors.white,
+            title: Row(
+              children: [
+                const Icon(Icons.info_outline, color: AppColors.premiumGold, size: 28),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    appProvider.translate('ad_notice_title'),
+                    style: TextStyle(
+                      color: isDark ? Colors.white : AppColors.darkEmerald,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
                   ),
+                ),
+              ],
+            ),
+            content: Text(
+              appProvider.translate('ad_notice_content'),
+              style: TextStyle(
+                color: isDark ? Colors.white70 : Colors.black87,
+                fontSize: 14.5,
+                height: 1.4,
+              ),
+            ),
+            actions: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  foregroundColor: AppColors.premiumGold,
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                ),
+                onPressed: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.setBool('has_shown_ad_notice', true);
+                  if (ctx.mounted) {
+                    Navigator.of(ctx).pop();
+                  }
+                },
+                child: Text(
+                  appProvider.translate('ad_notice_button'),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ),
             ],
-          ),
-          content: Text(
-            appProvider.translate('ad_notice_content'),
-            style: TextStyle(
-              color: isDark ? Colors.white70 : Colors.black87,
-              fontSize: 14.5,
-              height: 1.4,
-            ),
-          ),
-          actions: [
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: AppColors.premiumGold,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              ),
-              onPressed: () async {
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.setBool('has_shown_ad_notice', true);
-                Navigator.of(context).pop();
-              },
-              child: Text(
-                appProvider.translate('ad_notice_button'),
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        );
-      },
-    );
+          );
+        },
+      );
     } catch (e) {
       debugPrint('Error showing ad notice dialog: $e');
     }
@@ -290,9 +295,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       trailing: isSelected
                           ? const Icon(Icons.check_circle, color: AppColors.darkEmerald)
                           : null,
-                      onTap: () {
-                        provider.setLanguageCode(lang['code']!);
-                        setState(() => _currentStep = 1);
+                      onTap: () async {
+                        await provider.setLanguageCode(lang['code']!);
+                        final prefs = await SharedPreferences.getInstance();
+                        final hasShownNotice = prefs.getBool('has_shown_ad_notice') ?? false;
+                        if (!hasShownNotice && context.mounted) {
+                          await _showAdNoticeDialog(provider);
+                        }
+                        if (mounted) {
+                          setState(() => _currentStep = 1);
+                        }
                       },
                     ),
                   );
