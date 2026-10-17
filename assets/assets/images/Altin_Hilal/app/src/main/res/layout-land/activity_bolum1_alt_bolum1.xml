@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/Beige"
+    android:padding="16dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="15dp">
+            <!-- İlk Satır: Level 1 (Sol) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="10dp"
+                    android:padding="20dp"
+                    card_view:cardBackgroundColor="@color/cardview_light_background"
+                    card_view:cardCornerRadius="50dp"
+                    card_view:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:id="@+id/container_level1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:padding="5dp"
+                            android:src="@drawable/bolumler_1"
+                            android:theme="@style/Theme.arkaplanbos" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="Level 1"
+                            android:textColor="@color/Black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/alt_bolum1"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="2dp"
+                            android:background="@drawable/bolumler_buton_selector"
+                            android:elevation="12dp"
+                            android:onClick="altBolum_tikla_Bolum1"
+                            android:src="@android:drawable/ic_media_play" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/level1Container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="70dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp">
+
+                        <!-- Completed Text -->
+                        <TextView
+                            android:id="@+id/completed_text1"
+                            android:layout_width="120dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:paddingTop="20dp"
+                            android:rotation="-20"
+                            android:text="COMPLETED"
+                            android:textColor="#FF0000"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="45dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ok_resim2"
+                    android:theme="@style/Theme.arkaplanbos" />
+
+            </LinearLayout>
+
+            <!--  Level 2 (Sağ) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="horizontal"> <!-- Bu satır ile tüm içeriği sağa yaslayabilirsiniz -->
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="45dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ok_resim"
+                    android:theme="@style/Theme.arkaplanbos" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="end"
+                    android:padding="20dp"
+                    card_view:cardBackgroundColor="@color/cardview_light_background"
+                    card_view:cardCornerRadius="50dp"
+                    card_view:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:padding="5dp"
+                            android:src="@drawable/bolumler_1"
+                            android:theme="@style/Theme.arkaplanbos" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="Level 2"
+                            android:textColor="@color/Black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/alt_bolum2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bolumler_buton_selector"
+                            android:elevation="12dp"
+                            android:onClick="altBolum_tikla_Bolum1"
+                            android:src="@android:drawable/ic_media_play" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/level2Container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp">
+
+                        <!-- Completed Text -->
+                        <TextView
+                            android:id="@+id/completed_text2"
+                            android:layout_width="120dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:paddingTop="20dp"
+                            android:rotation="-20"
+                            android:text="COMPLETED"
+                            android:textColor="#FF0000"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <!--  Level 3 (Sol) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="10dp"
+                    android:padding="20dp"
+                    card_view:cardBackgroundColor="@color/cardview_light_background"
+                    card_view:cardCornerRadius="50dp"
+                    card_view:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:padding="5dp"
+                            android:src="@drawable/bolumler_1"
+                            android:theme="@style/Theme.arkaplanbos" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="Level 3"
+                            android:textColor="@color/Black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/alt_bolum3"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="2dp"
+                            android:background="@drawable/bolumler_buton_selector"
+                            android:elevation="12dp"
+                            android:onClick="altBolum_tikla_Bolum1"
+                            android:src="@android:drawable/ic_media_play" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/level3Container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp">
+                        <!-- Completed Text -->
+                        <TextView
+                            android:id="@+id/completed_text3"
+                            android:layout_width="120dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:paddingTop="20dp"
+                            android:rotation="-20"
+                            android:text="COMPLETED"
+                            android:textColor="#FF0000"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="45dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ok_resim2"
+                    android:theme="@style/Theme.arkaplanbos" />
+
+            </LinearLayout>
+
+            <!--  Level 4 (Sağ) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="horizontal"> <!-- Bu satır ile tüm içeriği sağa yaslayabilirsiniz -->
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="45dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ok_resim"
+                    android:theme="@style/Theme.arkaplanbos" />
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="end"
+                    android:padding="20dp"
+                    card_view:cardBackgroundColor="@color/cardview_light_background"
+                    card_view:cardCornerRadius="50dp"
+                    card_view:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:padding="5dp"
+                            android:src="@drawable/bolumler_1"
+                            android:theme="@style/Theme.arkaplanbos" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="Level 4"
+                            android:textColor="@color/Black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/alt_bolum4"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:background="@drawable/bolumler_buton_selector"
+                            android:elevation="12dp"
+                            android:onClick="altBolum_tikla_Bolum1"
+                            android:src="@android:drawable/ic_media_play" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/level4Container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp">
+
+                        <!-- Completed Text -->
+                        <TextView
+                            android:id="@+id/completed_text4"
+                            android:layout_width="120dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:paddingTop="20dp"
+                            android:rotation="-20"
+                            android:text="COMPLETED"
+                            android:textColor="#FF0000"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>        <!-- İlk Satır: Level 1 (Sol) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="150dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="10dp"
+                    android:padding="20dp"
+                    card_view:cardBackgroundColor="@color/cardview_light_background"
+                    card_view:cardCornerRadius="50dp"
+                    card_view:cardElevation="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center"
+                            android:padding="5dp"
+                            android:src="@drawable/bolumler_1"
+                            android:theme="@style/Theme.arkaplanbos" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="2dp"
+                            android:text="Level 5"
+                            android:textColor="@color/Black"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <ImageButton
+                            android:id="@+id/alt_bolum5"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="2dp"
+                            android:background="@drawable/bolumler_buton_selector"
+                            android:elevation="12dp"
+                            android:onClick="altBolum_tikla_Bolum1"
+                            android:src="@android:drawable/ic_media_play" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/level5Container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp">
+
+                        <!-- Completed Text -->
+                        <TextView
+                            android:id="@+id/completed_text5"
+                            android:layout_width="120dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="center"
+                            android:layout_marginBottom="5dp"
+                            android:paddingTop="20dp"
+                            android:rotation="-20"
+                            android:text="COMPLETED"
+                            android:textColor="#FF0000"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

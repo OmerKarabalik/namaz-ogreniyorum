@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/uygulamaiconu"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AltinHilal"
+        tools:targetApi="31">
+        <activity
+            android:name=".AnaEkran.Bolum4.Bolum4_AltBolumA_AltAna"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum3.Bolum3_AltBolumB_AltC"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum3.Bolum3_AltBolumB_AltB"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum3.Bolum3_AltBolumB_AltA"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum3.Bolum3_AltBolumA_AltAna"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum2.Bolum2_AltBolumA_AltB"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum2.Bolum2_AltBolumA_AltA"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum1.Bolum1_AltBolumA.Bolum1_AltBolumA_AltD"
+            android:exported="false"
+            android:theme="@style/Theme.AltinHilal"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".AnaEkran.Bolum2.Bolum2_AltBolumA_AltAna"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum1.Bolum1_AltBolumB.Bolum1_AltBolumB_AltB"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum1.Bolum1_AltBolumB.Bolum1_AltBolumB_AltA"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum1.Bolum1_AltBolumB.Bolum1_AltBolumB_AltAna"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum1.Bolum1_AltBolumA.Bolum1_AltBolumA_AltB"
+            android:exported="false"
+            tools:ignore="Instantiatable" />
+        <activity
+            android:name=".AnaEkran.Bolum1.Bolum1_AltBolumA.Bolum1_AltBolumA_AltAnaA"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AnaEkran.Bolum1.Bolum1_AltBolumA.Bolum1_AltBolumA_AltAna"
+            android:exported="false" />
+        <activity
+            android:name=".AnaEkran.Bolum1.Bolum1_AltBolumA.Eslestirme_Bolum1"
+            android:exported="false" />
+    </application>
+
+</manifest>

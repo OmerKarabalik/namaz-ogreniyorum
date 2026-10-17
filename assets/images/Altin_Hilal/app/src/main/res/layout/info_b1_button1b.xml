@@ -1,0 +1,30 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog_gradient_b1b">
+
+    <TextView
+        android:id="@+id/dialogTitle1e"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🎮 Oyun Hakkında"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2" />
+
+    <TextView
+        android:id="@+id/dialogMessage1e"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#EEEEEE"
+        android:textSize="16sp"
+        android:layout_marginTop="14dp"
+        android:lineSpacingExtra="4dp"
+        android:text="🎯 Amaç: İngilizce olumlu ve olumsuz kişilik özelliklerini doğru alana sürükleyerek eşleştir.\n\n✅ Doğru eşleşme: +10 puan\n❌ Yanlış eşleşme: -10 puan\n\n🏁 Tüm kelimeler yerleşince sonuç ekranı açılır.\n💡 Yeterli puanla bir sonraki bölüme geçebilirsiniz!" />
+</LinearLayout>

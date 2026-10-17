@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Bolum1_AltBolumD">
+        <item>Any questions?-Herhangi bir soru</item>
+        <item>Be quiet, please-Sessiz ol, lütfen</item>
+        <item>Can I go out?-Dışarı çıkabilir miyim?</item>
+        <item>Can you repeat that?-Bunu tekrarlayabilir misin?</item>
+        <item>Can you speak more slowly?-Daha yavaş konuşabilir misin?</item>
+        <item>I don\'t understand-Anlamadım</item>
+        <item>Listen to recording-Kaydı dinle</item>
+        <item>Open your books-Kitaplarınızı açın</item>
+        <item>What does this word mean?-Bu kelime ne anlama geliyor?</item>
+        <item>What\'s the answer to question...?-Sorunun cevabı nedir...?</item>
+    </string-array>
+    <string-array name="language_array">
+        <item>English  </item>
+        <item>Türkçe  </item>
+    </string-array>
+
+</resources>
