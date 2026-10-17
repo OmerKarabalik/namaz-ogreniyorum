@@ -154,6 +154,8 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!_initialized) {
       _currentStep = appProvider.setupCompleted ? 3 : 0;
       _initialized = true;
+    } else if (!appProvider.setupCompleted && _currentStep == 3) {
+      _currentStep = 0;
     }
 
     return PopScope(

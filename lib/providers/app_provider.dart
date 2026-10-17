@@ -113,8 +113,15 @@ class AppProvider extends ChangeNotifier {
       // Load Setup Completed
       _setupCompleted = prefs.getBool('setup_completed') ?? false;
       
-      // Load Language (default to Turkish unless user explicitly saved another)
-      _languageCode = prefs.getString('language_code') ?? 'tr';
+      // Load Language (default to device system language if supported, otherwise Turkish)
+      final savedLang = prefs.getString('language_code');
+      if (savedLang != null) {
+        _languageCode = savedLang;
+      } else {
+        final sysLang = PlatformDispatcher.instance.locale.languageCode.toLowerCase();
+        const supported = ['tr', 'en', 'de', 'fr', 'es', 'id', 'ru', 'it', 'ur'];
+        _languageCode = supported.contains(sysLang) ? sysLang : 'tr';
+      }
 
       // Load User Location
       _userLatitude = prefs.getDouble('user_latitude') ?? 41.0082;

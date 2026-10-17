@@ -72,17 +72,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _handleStartTap(AppProvider appProvider) async {
     // Show location selection sheet on first launch so user can choose GPS or world city
-    final selected = await LocationSelectionSheet.show(context);
-    if (selected == true) {
-      _proceedToMainApp(appProvider);
-    }
+    await LocationSelectionSheet.show(context);
+    _proceedToMainApp(appProvider);
   }
 
   Future<void> _proceedToMainApp(AppProvider appProvider) async {
     if (_navigated) return;
     _navigated = true;
 
-    appProvider.setSetupCompleted(true);
+    // Do NOT set setupCompleted here; HomeScreen's wizard will complete it after Language, Mezhep, and Gender!
     if (mounted) {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (context) => const MainLayout()),
