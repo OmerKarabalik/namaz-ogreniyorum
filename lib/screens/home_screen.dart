@@ -20,6 +20,7 @@ import 'prayer_times_screen.dart';
 import 'qibla_compass_screen.dart';
 import '../widgets/location_selection_sheet.dart';
 import '../widgets/notification_settings_sheet.dart';
+import '../services/notification_service.dart';
 
 class HomeScreen extends StatefulWidget {
   final VoidCallback? onSettingsTap;
@@ -40,8 +41,30 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _checkAndShowAdNotice();
+    _checkNotificationPermissions();
     _startLiveTimer();
     _scrollController.addListener(_onScroll);
+  }
+
+  Future<void> _checkNotificationPermissions() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final hasAsked = prefs.getBool('has_prompted_notif_perm') ?? false;
+      final setupCompleted = prefs.getBool('setup_completed') ?? false;
+      if (!hasAsked && setupCompleted) {
+        await prefs.setBool('has_prompted_notif_perm', true);
+        WidgetsBinding.instance.addPostFrameCallback((_) async {
+          if (!mounted) return;
+          final granted = await NotificationService.requestPermissions();
+          if (granted && mounted) {
+            final provider = Provider.of<AppProvider>(context, listen: false);
+            await provider.reschedulePrayerNotifications();
+          }
+        });
+      }
+    } catch (e) {
+      debugPrint('Error checking notification permissions: $e');
+    }
   }
 
   void _onScroll() {
@@ -509,10 +532,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   subtitle: provider.translate('male_desc'),
                   icon: Icons.male,
                   isSelected: provider.selectedGender == Gender.male,
-                  onTap: () {
+                  onTap: () async {
                     provider.setSelectedGender(Gender.male);
                     provider.setSetupCompleted(true);
                     setState(() => _currentStep = 3);
+                    await NotificationService.requestPermissions();
+                    await provider.reschedulePrayerNotifications();
                   },
                   isDark: isDark,
                 ),
@@ -524,10 +549,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   subtitle: provider.translate('female_desc'),
                   icon: Icons.female,
                   isSelected: provider.selectedGender == Gender.female,
-                  onTap: () {
+                  onTap: () async {
                     provider.setSelectedGender(Gender.female);
                     provider.setSetupCompleted(true);
                     setState(() => _currentStep = 3);
+                    await NotificationService.requestPermissions();
+                    await provider.reschedulePrayerNotifications();
                   },
                   isDark: isDark,
                 ),

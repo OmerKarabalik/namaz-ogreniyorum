@@ -78,10 +78,19 @@ class NotificationService {
     final androidImplementation = _notificationsPlugin.resolvePlatformSpecificImplementation<
         AndroidFlutterLocalNotificationsPlugin>();
     if (androidImplementation != null) {
+      // Clean up previous channel versions to ensure fresh settings
+      for (final v in ['v10', 'v9', 'v8']) {
+        for (final s in ['ezan_normal', 'ezan_fast', 'ezan_emotional', 'chime']) {
+          try {
+            await androidImplementation.deleteNotificationChannel('ezan_alarm_channel_${v}_$s');
+          } catch (_) {}
+        }
+      }
+
       for (final soundName in ['ezan_normal', 'ezan_fast', 'ezan_emotional']) {
         await androidImplementation.createNotificationChannel(
           AndroidNotificationChannel(
-            'ezan_alarm_channel_v10_$soundName',
+            'ezan_alarm_channel_v12_$soundName',
             'Ezan & Vakit Alarmı ($soundName)',
             description: 'Namaz vakitlerinde ezan ve vakit alarmları gönderir.',
             importance: Importance.max,
@@ -95,7 +104,7 @@ class NotificationService {
       }
       await androidImplementation.createNotificationChannel(
         const AndroidNotificationChannel(
-          'ezan_alarm_channel_v10_chime',
+          'ezan_alarm_channel_v12_chime',
           'Vakit Bildirimi (Kısa Zil)',
           description: 'Namaz vakitlerinde kısa uyarı sesi çalar.',
           importance: Importance.max,
@@ -121,6 +130,18 @@ class NotificationService {
       return details.notificationResponse?.payload;
     }
     return null;
+  }
+
+  /// Check if notification permission is currently granted
+  static Future<bool> areNotificationsEnabled() async {
+    await initialize();
+    final androidImplementation = _notificationsPlugin.resolvePlatformSpecificImplementation<
+        AndroidFlutterLocalNotificationsPlugin>();
+    if (androidImplementation != null) {
+      final enabled = await androidImplementation.areNotificationsEnabled();
+      return enabled ?? false;
+    }
+    return true;
   }
 
   /// Request notification permission on Android 13+ and iOS
@@ -241,7 +262,7 @@ class NotificationService {
     }
 
     final androidDetails = AndroidNotificationDetails(
-      soundType == 'chime' ? 'ezan_alarm_channel_v10_chime' : 'ezan_alarm_channel_v10_$rawSoundName',
+      soundType == 'chime' ? 'ezan_alarm_channel_v12_chime' : 'ezan_alarm_channel_v12_$rawSoundName',
       'Ezan & Vakit Bildirimleri (Alarm)',
       channelDescription: 'Namaz vakitlerinde ezan ve vakit bildirimleri gönderir.',
       importance: Importance.max,
@@ -351,7 +372,7 @@ class NotificationService {
     }
 
     final androidDetails = AndroidNotificationDetails(
-      soundType == 'chime' ? 'ezan_alarm_channel_v10_chime' : 'ezan_alarm_channel_v10_$rawSoundName',
+      soundType == 'chime' ? 'ezan_alarm_channel_v12_chime' : 'ezan_alarm_channel_v12_$rawSoundName',
       'Ezan & Vakit Bildirimleri (Alarm)',
       channelDescription: 'Namaz vakitlerinde ezan ve vakit bildirimleri gönderir.',
       importance: Importance.max,
@@ -426,7 +447,7 @@ class NotificationService {
     else if (soundType == 'auto') rawSoundName = 'ezan_normal';
 
     final androidDetails = AndroidNotificationDetails(
-      soundType == 'chime' ? 'ezan_alarm_channel_v10_chime' : 'ezan_alarm_channel_v10_$rawSoundName',
+      soundType == 'chime' ? 'ezan_alarm_channel_v12_chime' : 'ezan_alarm_channel_v12_$rawSoundName',
       'Ezan & Vakit Bildirimleri (Test)',
       channelDescription: 'Test için anında bildirim kanalı.',
       importance: Importance.max,

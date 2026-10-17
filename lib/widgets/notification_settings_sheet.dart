@@ -25,10 +25,12 @@ class _NotificationSettingsSheetState extends State<NotificationSettingsSheet> {
   final AudioPlayer _previewPlayer = AudioPlayer();
   bool _isPlayingPreview = false;
   String? _currentlyPlayingSound;
+  bool _notificationsAllowed = true;
 
   @override
   void initState() {
     super.initState();
+    _checkPermissionStatus();
     _previewPlayer.onPlayerComplete.listen((_) {
       if (mounted) {
         setState(() {
@@ -37,6 +39,15 @@ class _NotificationSettingsSheetState extends State<NotificationSettingsSheet> {
         });
       }
     });
+  }
+
+  Future<void> _checkPermissionStatus() async {
+    final allowed = await NotificationService.areNotificationsEnabled();
+    if (mounted) {
+      setState(() {
+        _notificationsAllowed = allowed;
+      });
+    }
   }
 
   @override
@@ -456,6 +467,52 @@ class _NotificationSettingsSheetState extends State<NotificationSettingsSheet> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  if (!_notificationsAllowed) ...[
+                    Container(
+                      margin: const EdgeInsets.only(bottom: 16),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: Colors.red.shade50,
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: Colors.red.shade200),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.warning_amber_rounded, color: Colors.red, size: 24),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              lang == 'tr'
+                                  ? 'Cihaz bildirim izni kapalı! Ezanın çalabilmesi için izin vermelisiniz.'
+                                  : 'Notification permission is disabled! Please allow to hear Adhan.',
+                              style: const TextStyle(
+                                color: Colors.red,
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                              foregroundColor: Colors.white,
+                              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                            ),
+                            onPressed: () async {
+                              await NotificationService.requestPermissions();
+                              await _checkPermissionStatus();
+                            },
+                            child: Text(
+                              lang == 'tr' ? 'İzin Ver' : 'Allow',
+                              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+
                   // Master Switch Card
                   Container(
                     decoration: BoxDecoration(
@@ -491,6 +548,113 @@ class _NotificationSettingsSheetState extends State<NotificationSettingsSheet> {
                       onChanged: (val) {
                         appProvider.setNotificationSettings(isEnabled: val);
                       },
+                    ),
+                  ),
+                  const SizedBox(height: 14),
+
+                  // Test Notification & Alarm Card
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: isDark ? AppColors.darkSurface : Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                        color: AppColors.champagneGold.withOpacity(0.35),
+                      ),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            const Icon(Icons.speed_rounded, color: AppColors.premiumGold, size: 20),
+                            const SizedBox(width: 8),
+                            Text(
+                              lang == 'tr' ? 'Bildirim ve Ezan Testi' : 'Notification & Adhan Test',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13.5,
+                                color: isDark ? Colors.white : AppColors.darkEmerald,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: OutlinedButton.icon(
+                                style: OutlinedButton.styleFrom(
+                                  foregroundColor: AppColors.emeraldGreen,
+                                  side: const BorderSide(color: AppColors.emeraldGreen),
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                ),
+                                icon: const Icon(Icons.notifications_active, size: 16),
+                                label: Text(
+                                  lang == 'tr' ? 'Anında Çal' : 'Play Now',
+                                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                ),
+                                onPressed: () async {
+                                  await NotificationService.requestPermissions();
+                                  await _checkPermissionStatus();
+                                  await NotificationService.showInstantTestNotification(
+                                    soundType: appProvider.adhanSoundType,
+                                  );
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          lang == 'tr' ? '⚡ Test bildirimi gönderildi!' : '⚡ Test notification sent!',
+                                        ),
+                                        duration: const Duration(seconds: 2),
+                                        backgroundColor: AppColors.emeraldGreen,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: ElevatedButton.icon(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.emeraldGreen,
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                ),
+                                icon: const Icon(Icons.timer_outlined, size: 16),
+                                label: Text(
+                                  lang == 'tr' ? '10sn Alarm' : '10s Alarm',
+                                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                ),
+                                onPressed: () async {
+                                  await NotificationService.requestPermissions();
+                                  await _checkPermissionStatus();
+                                  await NotificationService.scheduleTestNotification(
+                                    soundType: appProvider.adhanSoundType,
+                                    seconds: 10,
+                                  );
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(
+                                          lang == 'tr'
+                                              ? '⏳ Test alarmı kuruldu! Ekranı kilitleyip 10 saniye bekleyin.'
+                                              : '⏳ Test alarm set! Lock screen and wait 10 seconds.',
+                                        ),
+                                        duration: const Duration(seconds: 5),
+                                        backgroundColor: AppColors.emeraldGreen,
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                   const SizedBox(height: 20),
