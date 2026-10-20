@@ -16,7 +16,7 @@ platform :ios do
     keychain_name = "ci_keychain"
     keychain_password = "ci_keychain_password"
 
-    create_keychain(
+    keychain_path = create_keychain(
       name: keychain_name,
       password: keychain_password,
       default_keychain: true,
@@ -28,7 +28,7 @@ platform :ios do
     # 3. Fetch or generate iOS Distribution Certificate
     get_certificates(
       api_key: api_key,
-      keychain_name: keychain_name,
+      keychain_path: keychain_path,
       keychain_password: keychain_password
     )
 
@@ -61,7 +61,6 @@ platform :ios do
     # 6. Upload directly to TestFlight & App Store
     upload_to_testflight(
       api_key: api_key,
-      ipa: "../build/ios/ipa/NamazOgreniyorum.ipa",
       skip_waiting_for_build_processing: true,
       skip_submission: true,
       distribute_external: false
