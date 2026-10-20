@@ -45,7 +45,15 @@ platform :ios do
     profile_name = ENV["sigh_com.omrkr.namaz.ogreniyorum.app_app-store_profile-name"]
     UI.message("Using Provisioning Profile: #{profile_name}")
 
-    # 5. Build signed release IPA
+    # 5. Update code signing settings in project
+    update_code_signing_settings(
+      use_automatic_signing: false,
+      path: "Runner.xcodeproj",
+      profile_name: profile_name,
+      code_sign_identity: "Apple Distribution"
+    )
+
+    # 6. Build signed release IPA
     build_app(
       workspace: "Runner.xcworkspace",
       scheme: "Runner",
@@ -53,6 +61,7 @@ platform :ios do
       export_method: "app-store",
       output_directory: "../build/ios/ipa",
       output_name: "NamazOgreniyorum.ipa",
+      xcargs: "CODE_SIGN_STYLE=Manual CODE_SIGN_IDENTITY='Apple Distribution' PROVISIONING_PROFILE_SPECIFIER='#{profile_name}'",
       export_options: {
         method: "app-store",
         signingStyle: "manual",
@@ -62,7 +71,7 @@ platform :ios do
       }
     )
 
-    # 6. Upload directly to TestFlight & App Store
+    # 7. Upload directly to TestFlight & App Store
     upload_to_testflight(
       api_key: api_key,
       skip_waiting_for_build_processing: true,
