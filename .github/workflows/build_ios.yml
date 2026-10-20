@@ -18,6 +18,7 @@ jobs:
       APP_STORE_CONNECT_API_KEY_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}
       APP_STORE_CONNECT_API_KEY_KEY: ${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}
       APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      APPLE_CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
 
     steps:
       - name: Checkout Code
@@ -31,6 +32,10 @@ jobs:
 
       - name: Install Dependencies
         run: flutter pub get
+
+      - name: Decode Signing Certificate
+        run: |
+          echo "${{ secrets.APPLE_CERTIFICATE_P12_BASE64 }}" | base64 --decode > ios/certificate.p12
 
       - name: Prepare Signing Certificates & Profile
         run: |
