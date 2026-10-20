@@ -83,7 +83,7 @@
 
 	<!-- Google AdMob iOS Yapılandırması -->
 	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3940256099942544~1458002511</string>
+	<string>ca-app-pub-5160530830178108~8821603182</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

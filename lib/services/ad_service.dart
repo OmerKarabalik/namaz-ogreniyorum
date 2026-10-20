@@ -11,10 +11,14 @@ class AdService {
   // 2 dakika (120 saniye) olarak ayarlandı.
   static const int minimumGecisSuresiSaniye = 120;
 
-  // === GOOGLE ADMOB REKLAM BİRİM KİMLİKLERİ (Test IDs) ===
-  // NOT: Uygulama yayınlanmadan önce bu kimlikler AdMob panelinden alınan gerçek kodlarla değiştirilmelidir.
+  // === GOOGLE ADMOB REKLAM BİRİM KİMLİKLERİ ===
   static const String bannerAdUnitId = 'ca-app-pub-3940256099942544/6300978111';
-  static const String interstitialAdUnitId = 'ca-app-pub-5160530830178108/5778948970';
+  static String get interstitialAdUnitId {
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return 'ca-app-pub-5160530830178108/7420891607'; // iOS Gerçek Geçiş Reklamı
+    }
+    return 'ca-app-pub-5160530830178108/5778948970'; // Android Gerçek Geçiş Reklamı
+  }
 
   // Geçiş Reklamı Durumu
   static InterstitialAd? _interstitialAd;
