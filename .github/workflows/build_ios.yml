@@ -111,8 +111,14 @@ jobs:
 
       - name: Upload IPA to App Store Connect / TestFlight
         run: |
-          cd ios
-          fastlane upload_ipa
+          mkdir -p ~/.appstoreconnect/private_keys ~/.private_keys
+          echo "${{ secrets.APP_STORE_CONNECT_API_KEY_KEY }}" > ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}.p8
+          cp ~/.appstoreconnect/private_keys/AuthKey_${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}.p8 ~/.private_keys/
+
+          IPA_PATH=$(ls build/ios/ipa/*.ipa | head -n 1)
+          echo "Found signed IPA at: $IPA_PATH"
+          echo "Uploading to App Store Connect using official Apple altool..."
+          xcrun altool --upload-app --type ios -f "$IPA_PATH" --apiKey "${{ secrets.APP_STORE_CONNECT_API_KEY_KEY_ID }}" --apiIssuer "${{ secrets.APP_STORE_CONNECT_API_KEY_ISSUER_ID }}"
 
       - name: Upload Signed IPA Artifact
         if: always()
