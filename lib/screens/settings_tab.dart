@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants/theme.dart';
@@ -337,6 +338,7 @@ class SettingsTab extends StatelessWidget {
             isDark: isDark,
           ),
           _buildRateAppButton(context, lang, isDark),
+          _buildPrivacyPolicyButton(context, lang, isDark),
           const SizedBox(height: 30),
 
         ],
@@ -520,8 +522,47 @@ class SettingsTab extends StatelessWidget {
     );
   }
   Widget _buildRateAppButton(BuildContext context, String lang, bool isDark) {
-    final rateTitle = lang == 'tr' ? 'Uygulamayı Puanla (5 Yıldız Ver)' : lang == 'en' ? 'Rate the App (Give 5 Stars)' : lang == 'de' ? 'App bewerten (5 Sterne)' : lang == 'fr' ? 'Noter l\'application' : lang == 'es' ? 'Calificar la aplicación' : lang == 'id' ? 'Beri Nilai Aplikasi' : lang == 'ru' ? 'Оценить приложение' : lang == 'it' ? 'Valuta l\'app' : lang == 'ur' ? 'ایپ کی درجہ بندی کریں' : 'Rate the App';
-    final rateSub = lang == 'tr' ? 'Bize destek olmak için Play Store\'da puan verin.' : lang == 'en' ? 'Support us by rating on the Play Store.' : lang == 'de' ? 'Unterstützen Sie uns durch eine Bewertung im Play Store.' : lang == 'fr' ? 'Soutenez-nous en notant sur le Play Store.' : lang == 'es' ? 'Apóyanos calificando en Play Store.' : lang == 'id' ? 'Dukung kami dengan memberi peringkat di Play Store.' : lang == 'ru' ? 'Поддержите нас, оценив приложение в Play Store.' : lang == 'it' ? 'Supportaci valutando sul Play Store.' : lang == 'ur' ? 'پلے اسٹور پر درجہ بندی کرکے ہماری مدد کریں۔' : 'Support us by rating on the Play Store.';
+    final isIos = Platform.isIOS;
+    final storeName = isIos ? 'App Store' : 'Play Store';
+    final rateTitle = lang == 'tr'
+        ? (isIos ? 'Uygulamayı Puanla (App Store)' : 'Uygulamayı Puanla (5 Yıldız Ver)')
+        : lang == 'en'
+            ? (isIos ? 'Rate the App (App Store)' : 'Rate the App (Give 5 Stars)')
+            : lang == 'de'
+                ? 'App bewerten ($storeName)'
+                : lang == 'fr'
+                    ? 'Noter l\'application ($storeName)'
+                    : lang == 'es'
+                        ? 'Calificar la aplicación ($storeName)'
+                        : lang == 'id'
+                            ? 'Beri Nilai Aplikasi ($storeName)'
+                            : lang == 'ru'
+                                ? 'Оценить приложение ($storeName)'
+                                : lang == 'it'
+                                    ? 'Valuta l\'app ($storeName)'
+                                    : lang == 'ur'
+                                        ? 'ایپ کی درجہ بندی کریں ($storeName)'
+                                        : 'Rate the App ($storeName)';
+
+    final rateSub = lang == 'tr'
+        ? 'Bize destek olmak için $storeName\'da puan verin.'
+        : lang == 'en'
+            ? 'Support us by rating on the $storeName.'
+            : lang == 'de'
+                ? 'Unterstützen Sie uns durch eine Bewertung im $storeName.'
+                : lang == 'fr'
+                    ? 'Soutenez-nous en notant sur $storeName.'
+                    : lang == 'es'
+                        ? 'Apóyanos calificando en $storeName.'
+                        : lang == 'id'
+                            ? 'Dukung kami dengan memberi peringkat di $storeName.'
+                            : lang == 'ru'
+                                ? 'Поддержите нас, оценив приложение в $storeName.'
+                                : lang == 'it'
+                                    ? 'Supportaci valutando su $storeName.'
+                                    : lang == 'ur'
+                                        ? '$storeName پر درجہ بندی کرکے ہماری مدد کریں۔'
+                                        : 'Support us by rating on the $storeName.';
     
     return _buildMockupTile(
       context,
@@ -529,7 +570,69 @@ class SettingsTab extends StatelessWidget {
       subtitle: rateSub,
       icon: Icons.star_rate_rounded,
       onTap: () async {
-        final url = Uri.parse('https://play.google.com/store/apps/details?id=com.omerkr.namaz_ogreniyorum');
+        final url = isIos
+            ? Uri.parse('https://apps.apple.com/app/namaz%C4%B1-%C3%B6%C4%9Freniyorum/id6737516890')
+            : Uri.parse('https://play.google.com/store/apps/details?id=com.omerkr.namaz_ogreniyorum');
+        try {
+          if (await canLaunchUrl(url)) {
+            await launchUrl(url, mode: LaunchMode.externalApplication);
+          }
+        } catch (e) {
+          debugPrint('Could not launch $url');
+        }
+      },
+      isDark: isDark,
+    );
+  }
+
+  Widget _buildPrivacyPolicyButton(BuildContext context, String lang, bool isDark) {
+    final title = lang == 'tr'
+        ? 'Gizlilik Politikası'
+        : lang == 'en'
+            ? 'Privacy Policy'
+            : lang == 'de'
+                ? 'Datenschutzerklärung'
+                : lang == 'fr'
+                    ? 'Politique de confidentialité'
+                    : lang == 'es'
+                        ? 'Política de privacidad'
+                        : lang == 'id'
+                            ? 'Kebijakan Privasi'
+                            : lang == 'ru'
+                                ? 'Политика конфиденциальности'
+                                : lang == 'it'
+                                    ? 'Informativa sulla privacy'
+                                    : lang == 'ur'
+                                        ? 'رازداری کی پالیسی'
+                                        : 'Privacy Policy';
+
+    final sub = lang == 'tr'
+        ? 'Veri güvenliği ve gizlilik şartlarımızı inceleyin.'
+        : lang == 'en'
+            ? 'Review our data security and privacy terms.'
+            : lang == 'de'
+                ? 'Erfahren Sie mehr über Datensicherheit.'
+                : lang == 'fr'
+                    ? 'Consultez nos conditions de confidentialité.'
+                    : lang == 'es'
+                        ? 'Consulte nuestras condiciones de privacidad.'
+                        : lang == 'id'
+                            ? 'Tinjau ketentuan privasi kami.'
+                            : lang == 'ru'
+                                ? 'Ознакомьтесь с политикой конфиденциальности.'
+                                : lang == 'it'
+                                    ? 'Leggi i nostri termini sulla privacy.'
+                                    : lang == 'ur'
+                                        ? 'ڈیٹا سیکیورٹی شرائط دیکھیں۔'
+                                        : 'Review our privacy terms.';
+
+    return _buildMockupTile(
+      context,
+      title: title,
+      subtitle: sub,
+      icon: Icons.privacy_tip_outlined,
+      onTap: () async {
+        final url = Uri.parse('https://omerkarabalik.github.io/namaz-ogreniyorum/privacy-policy.html');
         try {
           if (await canLaunchUrl(url)) {
             await launchUrl(url, mode: LaunchMode.externalApplication);
