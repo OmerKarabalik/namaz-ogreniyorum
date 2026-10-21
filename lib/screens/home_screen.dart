@@ -51,17 +51,21 @@ class _HomeScreenState extends State<HomeScreen> {
       final prefs = await SharedPreferences.getInstance();
       final hasAsked = prefs.getBool('has_prompted_notif_perm') ?? false;
       final setupCompleted = prefs.getBool('setup_completed') ?? false;
-      if (!hasAsked && setupCompleted) {
-        await prefs.setBool('has_prompted_notif_perm', true);
-        WidgetsBinding.instance.addPostFrameCallback((_) async {
-          if (!mounted) return;
-          final granted = await NotificationService.requestPermissions();
-          if (granted && mounted) {
-            final provider = Provider.of<AppProvider>(context, listen: false);
-            await provider.reschedulePrayerNotifications();
-          }
-        });
-      }
+      
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        if (!mounted) return;
+        final provider = Provider.of<AppProvider>(context, listen: false);
+        
+        final isEnabled = await NotificationService.areNotificationsEnabled();
+        if (!isEnabled || (!hasAsked && setupCompleted)) {
+          await prefs.setBool('has_prompted_notif_perm', true);
+          await NotificationService.requestPermissions();
+        }
+        
+        if (mounted) {
+          await provider.reschedulePrayerNotifications();
+        }
+      });
     } catch (e) {
       debugPrint('Error checking notification permissions: $e');
     }

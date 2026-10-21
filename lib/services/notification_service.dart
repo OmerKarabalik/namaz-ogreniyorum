@@ -90,7 +90,7 @@ class NotificationService {
       for (final soundName in ['ezan_normal', 'ezan_fast', 'ezan_emotional']) {
         await androidImplementation.createNotificationChannel(
           AndroidNotificationChannel(
-            'ezan_alarm_channel_v12_$soundName',
+            'ezan_alarm_channel_v14_$soundName',
             'Ezan & Vakit Alarmı ($soundName)',
             description: 'Namaz vakitlerinde ezan ve vakit alarmları gönderir.',
             importance: Importance.max,
@@ -104,7 +104,7 @@ class NotificationService {
       }
       await androidImplementation.createNotificationChannel(
         const AndroidNotificationChannel(
-          'ezan_alarm_channel_v12_chime',
+          'ezan_alarm_channel_v14_chime',
           'Vakit Bildirimi (Kısa Zil)',
           description: 'Namaz vakitlerinde kısa uyarı sesi çalar.',
           importance: Importance.max,
@@ -262,7 +262,7 @@ class NotificationService {
     }
 
     final androidDetails = AndroidNotificationDetails(
-      soundType == 'chime' ? 'ezan_alarm_channel_v12_chime' : 'ezan_alarm_channel_v12_$rawSoundName',
+      soundType == 'chime' ? 'ezan_alarm_channel_v14_chime' : 'ezan_alarm_channel_v14_$rawSoundName',
       'Ezan & Vakit Bildirimleri (Alarm)',
       channelDescription: 'Namaz vakitlerinde ezan ve vakit bildirimleri gönderir.',
       importance: Importance.max,
@@ -273,8 +273,8 @@ class NotificationService {
           : RawResourceAndroidNotificationSound(rawSoundName),
       category: AndroidNotificationCategory.alarm,
       fullScreenIntent: true,
-      autoCancel: false,
-      ongoing: true,
+      autoCancel: true,
+      ongoing: false,
       audioAttributesUsage: AudioAttributesUsage.alarm,
       visibility: NotificationVisibility.public,
     );
@@ -372,7 +372,7 @@ class NotificationService {
     }
 
     final androidDetails = AndroidNotificationDetails(
-      soundType == 'chime' ? 'ezan_alarm_channel_v12_chime' : 'ezan_alarm_channel_v12_$rawSoundName',
+      soundType == 'chime' ? 'ezan_alarm_channel_v14_chime' : 'ezan_alarm_channel_v14_$rawSoundName',
       'Ezan & Vakit Bildirimleri (Alarm)',
       channelDescription: 'Namaz vakitlerinde ezan ve vakit bildirimleri gönderir.',
       importance: Importance.max,
@@ -381,8 +381,8 @@ class NotificationService {
       sound: soundType == 'chime' ? null : RawResourceAndroidNotificationSound(rawSoundName),
       category: AndroidNotificationCategory.alarm,
       fullScreenIntent: true,
-      autoCancel: false,
-      ongoing: true,
+      autoCancel: true,
+      ongoing: false,
       audioAttributesUsage: AudioAttributesUsage.alarm,
       visibility: NotificationVisibility.public,
     );
@@ -447,7 +447,7 @@ class NotificationService {
     else if (soundType == 'auto') rawSoundName = 'ezan_normal';
 
     final androidDetails = AndroidNotificationDetails(
-      soundType == 'chime' ? 'ezan_alarm_channel_v12_chime' : 'ezan_alarm_channel_v12_$rawSoundName',
+      soundType == 'chime' ? 'ezan_alarm_channel_v14_chime' : 'ezan_alarm_channel_v14_$rawSoundName',
       'Ezan & Vakit Bildirimleri (Test)',
       channelDescription: 'Test için anında bildirim kanalı.',
       importance: Importance.max,
@@ -458,8 +458,8 @@ class NotificationService {
           : RawResourceAndroidNotificationSound(rawSoundName),
       category: AndroidNotificationCategory.alarm,
       fullScreenIntent: true,
-      autoCancel: false,
-      ongoing: true,
+      autoCancel: true,
+      ongoing: false,
       audioAttributesUsage: AudioAttributesUsage.alarm,
       visibility: NotificationVisibility.public,
     );

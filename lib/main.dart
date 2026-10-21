@@ -12,9 +12,9 @@ void main() async {
   // Ensure Flutter binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Initialize Notification Service safely with timeout to ensure main thread never freezes
+  // Initialize Notification Service safely
   try {
-    await NotificationService.initialize().timeout(const Duration(seconds: 2));
+    await NotificationService.initialize();
   } catch (e) {
     debugPrint('NotificationService initialization warning: $e');
   }
