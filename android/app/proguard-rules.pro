@@ -21,9 +21,25 @@
 # MainActivity
 -keep class com.omrkr.namaz.ogreniyorum.app.MainActivity { *; }
 
-# Flutter Local Notifications
+# Flutter Local Notifications & Gson (Fixes TypeToken.getSuperclassTypeParameter crash in ScheduledNotificationReceiver)
 -keep class com.dexterous.flutterlocalnotifications.** { *; }
+-keep class com.dexterous.flutterlocalnotifications.models.** { *; }
 -dontwarn com.dexterous.flutterlocalnotifications.**
+-keepclassmembers class com.dexterous.flutterlocalnotifications.** { *; }
+-keepclassmembers class com.dexterous.flutterlocalnotifications.models.** { *; }
+
+-keep class com.google.gson.** { *; }
+-dontwarn com.google.gson.**
+-keep class * extends com.google.gson.reflect.TypeToken
+-keep class * extends com.google.gson.reflect.TypeToken { *; }
+-keep class * extends com.google.gson.TypeAdapter
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
+-keepclassmembers,allowobfuscation class * {
+  @com.google.gson.annotations.SerializedName <fields>;
+}
+-keepclassmembers enum * { *; }
 
 # Geolocator
 -keep class com.baseflow.geolocator.** { *; }
@@ -34,10 +50,11 @@
 -dontwarn j$.**
 
 # General Keep Attributes
--keepattributes *Annotation*
--keepattributes Exceptions
+-keepattributes EnclosingMethod
 -keepattributes InnerClasses
 -keepattributes Signature
+-keepattributes *Annotation*
+-keepattributes Exceptions
 -keepattributes SourceFile,LineNumberTable
 
 # Google Play Core (Deferred components / SplitCompat)
