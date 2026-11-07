@@ -10,8 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 class SettingsTab extends StatelessWidget {
   const SettingsTab({super.key});
 
-  static const String appVersionName = '1.0.27';
-  static const String appBuildNumber = '29';
+  static const String appVersionName = '1.0.28';
+  static const String appBuildNumber = '30';
   static const String androidPackageId = 'com.omrkr.namaz.ogreniyorum.app';
   static const String iosAppId = '6737516890';
 

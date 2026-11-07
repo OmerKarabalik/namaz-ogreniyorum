@@ -1,4 +1,4 @@
-import '../models/prayer_models.dart';
+﻿import '../models/prayer_models.dart';
 import 'prayer_database_en.dart';
 import 'prayer_database_de.dart';
 import 'prayer_database_fr.dart';
@@ -1372,89 +1372,7 @@ class PrayerDatabaseTr {
     }
   }
 
-  static final List<DuaSurah> _zammISureler = [
-    DuaSurah(
-          audioFileName: 'kureys.mp3',
-          name: 'Kureyş Suresi',
-          arabic: 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ. لِإِيلَافِ قُرَيْشٍ. إِيلَافِهِمْ رِحْلَةَ الشِّتَاءِ وَالصَّيْفِ. فَلْيَعْبُدُوا رَبَّ هَٰذَا الْبَيْتِ. الَّذِي أَطْعَمَهُم مِّن جُوعٍ وَآمَنَهُم مِّنْ خَوْفٍ.',
-          transcription: 'Bismillahirrahmânirrahîm. Elem tera keyfe fe\'ale rabbüke biashâbil fîl. Elem yec\'al keydehüm fî tadlîl. Ve ersele aleyhim tayran ebâbîl. Termîhim bihicâratin min siccîl. Fece\'alehüm ke\'asfin me\'kûl.',
-      translation: 'Rabbinin, fil sahiplerine ne yaptığını görmedin mi? Onların tuzaklarını boşa çıkarmadı mı? Onların üzerine sürü sürü kuşlar gönderdi. Onlara çamurdan pişirilmiş sert taşlar atıyorlardı. Nihayet onları yenilmiş ekin yaprağı gibi yaptı.',
-      description: '',
-    ),
-    DuaSurah(
-          audioFileName: 'maun.mp3',
-          name: 'Maun Suresi',
-          arabic: 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ. أَرَأَيْتَ الَّذِي يُكَذِّبُ بِالدِّينِ. فَذَٰلِكَ الَّذِي يَدُعُّ الْيَتِيمَ. وَلَا يَحُضُّ عَلَىٰ طَعَامِ الْمِسْكِينِ. فَوَيْلٌ لِّلْمُصَلِّينَ. الَّذِينَ هُمْ عَن صَلَاتِهِمْ سَاهُونَ. الَّذِينَ هُمْ يُرَاءُونَ. وَيَمْنَعُونَ الْمَاعُونَ.',
-          // Wait, transcription had: Îlâfihim rihleteşşitâi vessayf
-      transcription: 'Bismillahirrahmânirrahîm. Li-îlâfi kureyş. Îlâfihim rihleteşşitâi vessayf. Felye\'büdû rabbe hâzel beyt. Ellezî et\'amehüm min cû\'in ve âmenehüm min havf.',
-      translation: 'Kureyş\'i ısındırıp alıştırdığı; onları kış ve yaz seyahatlerine alıştırdığı için, kendilerini açlıktan doyuran ve korkudan emin kılan bu evin (Kabe\'nin) Rabbine kulluk etsinler.',
-      description: '',
-    ),
-    DuaSurah(
-          audioFileName: 'kevser.mp3',
-          name: 'Kevser Suresi',
-          arabic: 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ. إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ. فَصَلِّ لِرَبِّكَ وَانْحَرْ. إِنَّ شَانِئَكَ هُوَ الْأَبْتَرُ.',
-          transcription: 'Bismillahirrahmânirrahîm. Era\'eytellezî yükezzibü biddîn. Fezâlikellezî yedu\'ul yetîm. Ve lâ yehuddu alâ ta\'âmil miskîn. Feveylün lil-musallîn. Ellezînehüm an salâtihim sâhûn. Ellezînehüm yürâûn. Ve yemne\'ûnel mâ\'ûn.',
-      translation: 'Dini (hesap gününü) yalanlayanı gördün mü? İşte o, yetimi itip kakan, yoksulu doyurmaya teşvik etmeyendir. Yazıklar olsun o namaz kılanlara ki, onlar namazlarını ciddiye almazlar. Onlar gösteriş yaparlar ve en ufak bir yardımı bile engellerler.',
-      description: '',
-    ),
-    DuaSurah(
-          audioFileName: 'kafirun.mp3',
-          name: 'Kafirun Suresi',
-          arabic: 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ. قُلْ يَا أَيُّهَا الْكَافِرُونَ. لَا أَعْبُدُ مَا تَعْبُدُونَ. وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ. وَلَا أَنَا عَابِدٌ مَّا عَبَدتُّمْ. وَلَا أَنتُمْ عَابِدُونَ مَا أَعْبُدُ. لَكُمْ دِينُكُمْ وَلِيَ دِينِ.',
-          transcription: 'Bismillahirrahmânirrahîm. İnnâ a\'taynâkel kevser. Fesalli lirabbike venhar. İnne şânieke hüvel ebter.',
-      translation: 'Şüphesiz biz sana Kevser\'i verdik. Şimdi sen de Rabbin için namaz kıl ve kurban kes. Asıl sonu kesik olan, sana buğzedendir.',
-      description: '',
-    ),
-    DuaSurah(
-          audioFileName: 'nasr.mp3',
-          name: 'Nasr Suresi',
-          arabic: 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ. إِذَا جَاءَ نَصْرُ اللَّهِ وَالْفَتْحُ. وَرَأَيْتَ النَّاسَ يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا. فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا.',
-          transcription: 'Bismillahirrahmânirrahîm. Kul yâ eyyühel kâfirûn. Lâ a\'büdü mâ ta\'büdûn. Ve lâ entüm âbidûne mâ a\'büd. Ve lâ ene âbidün mâ abedtüm. Ve lâ entüm âbidûne mâ a\'büd. Leküm dînüküm veliye dîn.',
-      translation: 'De ki: Ey kafirler! Ben sizin tapmakta olduğunuz şeylere tapmam. Siz de benim taptığıma tapıcı değilsiniz. Ben sizin taptıklarınıza tapacak değilim. Siz de benim taptığıma tapacak değilsiniz. Sizin dininiz size, benim dinim banadır.',
-      description: '',
-    ),
-    DuaSurah(
-          audioFileName: 'tebbet.mp3',
-          name: 'Tebbet Suresi',
-          arabic: 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ. تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ. مَا أَغْنَىٰ عَنْهُ مَالُهُ وَمَا كَسَبَ. سَيَصْلَىٰ نَارًا ذَاتَ لَهَبٍ. وَامْرَأَتُهُ حَمَّالَةَ الْحَطَبِ. فِي جِيدِهَا حَبْلٌ مِّن مَّسَدٍ.',
-          transcription: 'Bismillahirrahmânirrahîm. İzâ câe nasrullâhi velfeth. Ve raeytennâse yedhulûne fî dînillâhi efvâcâ. Fesebbih bihamdi rabbike vestağfirh. İnnehû kâne tevvâbâ.',
-      translation: 'Allah\'ın yardımı ve fetih geldiği, ve insanların Allah\'ın dinine dalga dalga girdiğini gördüğün zaman, hemen Rabbini hamd ile tenzih et ve O\'ndan mağfiret dile. Çünkü O, tevbeleri çok kabul edendir.',
-      description: '',
-    ),
-    DuaSurah(
-          audioFileName: 'ihlas.mp3',
-          name: 'İhlas Suresi',
-          arabic: 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ. قُلْ هُوَ اللَّهُ أَحَدٌ. اللَّهُ الصَّمَدُ. لَمْ يَلِدْ وَلَمْ يُولَدْ. وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ.',
-          transcription: 'Bismillahirrahmânirrahîm. Tebbet yedâ ebî lehebin ve tebb. Mâ ağnâ anhü mâlühû ve mâ keseb. Seyaslâ nâran zâte leheb. Vempreetühû hammâletel hatab. Fî cîdihâ hablün min mesed.',
-      translation: 'Ebu Leheb\'in iki eli kurusun; kurudu da. Ne malı fayda verdi ona, ne de kazandığı. O, alevli bir ateşe girecektir. Odun taşıyıcı olarak karısı da; boynunda bükülmüş bir ip olduğu halde.',
-      description: '',
-    ),
-    DuaSurah(
-          audioFileName: 'felak.mp3',
-          name: 'Felak Suresi',
-          arabic: 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ. قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ. مِن شَرِّ مَا خَلَقَ. وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ. وَمِن شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ. وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ.',
-          transcription: 'Bismillahirrahmânirrahîm. Kul hüvellâhü ehad. Allâhüssamed. Lem yelid ve lem yûled. Ve lem yekün lehû küfüven ehad.',
-      translation: 'De ki: O Allah tektir. Allah Samed\'dir (her şey O\'na muhtaçtır, O hiçbir şeye muhtaç değildir). O doğurmamış ve doğurulmamıştır. Hiçbir şey O\'nun dengi/benzeri değildir.',
-      description: '',
-    ),
-    DuaSurah(
-          audioFileName: 'nas.mp3',
-          name: 'Nas Suresi',
-          arabic: 'بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيمِ. قُلْ أَعُوذُ بِرَبِّ النَّاسِ. مَلِكِ النَّاسِ. إِلَٰهِ النَّاسِ. مِن شَرِّ الْوَسْوَاسِ الْخَنَّاسِ. الَّذِي يُوَسْوِسُ فِي صُدُورِ النَّاسِ. مِنَ الْجِنَّةِ وَالنَّاسِ.',
-          transcription: 'Bismillahirrahmânirrahîm. Kul e\'ûzü birabbil felak. Min şerri mâ halak. Ve min şerri ğâsıkın izâ vekab. Ve min şerri neffâsâti fil ukad. Ve min şerri hâsidin izâ hased.',
-      translation: 'De ki: Yarattığı şeylerin kötülüğünden, karanlığı çöktüğü zaman gecenin kötülüğünden, düğümlere üfleyen büyücülerin kötülüğünden ve kıskandığı vakit kıskancın kötülüğünden sabahın Rabbine sığınırım.',
-      description: '',
-    ),
-    DuaSurah(
-          audioFileName: 'veccehtu.mp3',
-          name: 'Veccehtü (İftitah Duası)',
-          arabic: 'وَجَّهْتُ وَجْهِيَ لِلَّذِي فَطَرَ السَّمَاوَاتِ وَالْأَرْضَ حَنِيفًا وَمَا أَنَا مِنَ الْمُشْرِكِينَ. إِنَّ صَلَاتِي وَنُسُكِي وَمَحْيَايَ وَمَمَاتِي لِلَّهِ رَبِّ الْعَالَمِينَ. لَا شَرِيكَ لَهُ وَبِذَٰلِكَ أُمِرْتُ وَأَنَا مِنَ الْمُسْلِمِينَ.',
-          transcription: 'Bismillahirrahmânirrahîm. Kul e\'ûzü birabbinnâs. Melikinnâs. İlâhinnâs. Min şerril vesvâsil hannâs. Ellezî yüvesvisü fî sudûrinnâs. Minel cinneti vennâs.',
-      translation: 'De ki: İnsanların kalplerine vesvese sokan o sinsi vesvesecinin kötülüğünden, insanların Rabbine, insanların Malikine, insanların İlahına sığınırım. O vesveseci gerek cinlerden gerek insanlardandır.',
-      description: '',
-    ),
-  ];
+  static final List<DuaSurah> _zammISureler = getDuaSurahs().sublist(2, 12);
 
   static DuaSurah _getZammISure(PrayerTime time, String partName, int rekat) {
     int index = 0;
