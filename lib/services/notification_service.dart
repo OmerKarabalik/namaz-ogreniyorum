@@ -97,7 +97,6 @@ class NotificationService {
             playSound: true,
             sound: RawResourceAndroidNotificationSound(soundName),
             audioAttributesUsage: AudioAttributesUsage.alarm,
-      timeoutAfter: 4 * 60 * 1000,
             enableVibration: true,
             showBadge: true,
           ),
@@ -111,7 +110,6 @@ class NotificationService {
           importance: Importance.max,
           playSound: true,
           audioAttributesUsage: AudioAttributesUsage.alarm,
-      timeoutAfter: 4 * 60 * 1000,
           enableVibration: true,
         ),
       );
