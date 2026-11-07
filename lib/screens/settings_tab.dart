@@ -270,42 +270,6 @@ class SettingsTab extends StatelessWidget {
                                         ? 'لائٹ تھیم فعال ہے'
                                         : 'Light theme active');
 
-    final backupLabel = lang == 'tr'
-        ? 'Yedekle ve Geri Yükle'
-        : lang == 'de'
-            ? 'Sichern & Wiederherstellen'
-            : lang == 'fr'
-                ? 'Sauvegarder & Restaurer'
-                : lang == 'es'
-                    ? 'Copia de seguridad y restaurar'
-                    : lang == 'id'
-                        ? 'Cadangkan & Pulihkan'
-                        : lang == 'ru'
-                            ? 'Резервное копирование и восстановление'
-                            : lang == 'it'
-                                ? 'Backup e ripristino'
-                                : lang == 'ur'
-                                    ? 'بیک اپ اور بحال'
-                                    : 'Backup & Restore';
-
-    final backupSub = lang == 'tr'
-        ? 'Verilerinizi güvenle yedekleyin'
-        : lang == 'de'
-            ? 'Ihre Daten sichern'
-            : lang == 'fr'
-                ? 'Sauvegarder vos données'
-                : lang == 'es'
-                    ? 'Hacer una copia de seguridad'
-                    : lang == 'id'
-                        ? 'Cadangkan data Anda'
-                        : lang == 'ru'
-                            ? 'Резервное копирование данных'
-                            : lang == 'it'
-                                ? 'Fai il backup dei tuoi dati'
-                                : lang == 'ur'
-                                    ? 'اپنے ڈیٹا کا بیک اپ لیں'
-                                    : 'Back up your data';
-
     final aboutLabel = lang == 'tr'
         ? 'Hakkımızda'
         : lang == 'de'
@@ -450,24 +414,6 @@ class SettingsTab extends StatelessWidget {
                                 : lang == 'ur'
                                     ? 'وزرڈ دوبارہ ترتیب دیا گیا۔ آپ مرکزی ٹیب سے دوبارہ مراحل سے گزر سکتے ہیں۔'
                                     : 'Wizard reset. You can go through the steps again from the main tab.';
-
-    final okLabel = lang == 'tr'
-        ? 'Tamam'
-        : lang == 'de'
-            ? 'OK'
-            : lang == 'fr'
-                ? 'D\'accord'
-                : lang == 'es'
-                    ? 'Aceptar'
-                    : lang == 'id'
-                        ? 'OKE'
-                        : lang == 'ru'
-                            ? 'ОК'
-                            : lang == 'it'
-                                ? 'OK'
-                                : lang == 'ur'
-                                    ? 'ٹھیک ہے'
-                                    : 'OK';
 
     return Scaffold(
       body: ListView(
@@ -655,17 +601,7 @@ class SettingsTab extends StatelessWidget {
           // 5. Gizlilik Politikası (In-App Compliant Dialog)
           _buildPrivacyPolicyButton(context, lang, isDark),
 
-          // 6. Backup & Restore (Mockup / Cloud feature)
-          _buildMockupTile(
-            context,
-            title: backupLabel,
-            subtitle: backupSub,
-            icon: Icons.cloud_sync_outlined,
-            onTap: () => _showComingSoonDialog(context, backupLabel, okLabel),
-            isDark: isDark,
-          ),
-
-          // 7. Reset Wizard
+          // 6. Reset Wizard
           _buildMockupTile(
             context,
             title: wizardLabel,
@@ -866,23 +802,6 @@ class SettingsTab extends StatelessWidget {
         ),
         trailing: const Icon(Icons.chevron_right, color: Colors.grey, size: 20),
         onTap: onTap,
-      ),
-    );
-  }
-
-  void _showComingSoonDialog(BuildContext context, String title, String okLabel) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        content: Text('"$title" özelliği bir sonraki güncellemede aktif olacaktır.'),
-        actions: [
-          TextButton(
-            child: Text(okLabel, style: const TextStyle(color: AppColors.emeraldGreen, fontWeight: FontWeight.bold)),
-            onPressed: () => Navigator.pop(context),
-          )
-        ],
       ),
     );
   }
