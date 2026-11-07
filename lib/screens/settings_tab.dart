@@ -1114,7 +1114,6 @@ class SettingsTab extends StatelessWidget {
                                     : lang == 'ur'
                                         ? '$storeName پر جائزہ دیں۔'
                                         : 'Review us on $storeName.';
-                                        : 'Support us with a review on $storeName.';
 
     return _buildMockupTile(
       context,
