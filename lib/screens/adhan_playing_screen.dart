@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../providers/app_provider.dart';
@@ -103,7 +103,16 @@ class _AdhanPlayingScreenState extends State<AdhanPlayingScreen>
     }
 
     // Cancel all notifications
-    NotificationService.cancelAllNotifications();
+    try {
+      await NotificationService.cancelAllNotifications();
+    } catch (_) {}
+
+    if (mounted) {
+      try {
+        final provider = Provider.of<AppProvider>(context, listen: false);
+        await provider.reschedulePrayerNotifications();
+      } catch (_) {}
+    }
 
     if (mounted) {
       Navigator.of(context).pushAndRemoveUntil(

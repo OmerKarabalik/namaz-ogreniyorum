@@ -314,7 +314,15 @@ class AppProvider extends ChangeNotifier {
 
   // Reschedule all prayer notifications automatically
   Future<void> reschedulePrayerNotifications() async {
-    if (!_isNotificationsEnabled) return;
+    if (!_isNotificationsEnabled) {
+      try {
+        await NotificationService.cancelAllNotifications();
+        debugPrint('All prayer notifications cancelled because notifications are disabled.');
+      } catch (e) {
+        debugPrint('Error cancelling notifications: $e');
+      }
+      return;
+    }
     try {
       await NotificationService.schedulePrayerNotifications(
         latitude: _userLatitude,

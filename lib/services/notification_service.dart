@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+﻿import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -97,6 +97,7 @@ class NotificationService {
             playSound: true,
             sound: RawResourceAndroidNotificationSound(soundName),
             audioAttributesUsage: AudioAttributesUsage.alarm,
+      timeoutAfter: 4 * 60 * 1000,
             enableVibration: true,
             showBadge: true,
           ),
@@ -110,6 +111,7 @@ class NotificationService {
           importance: Importance.max,
           playSound: true,
           audioAttributesUsage: AudioAttributesUsage.alarm,
+      timeoutAfter: 4 * 60 * 1000,
           enableVibration: true,
         ),
       );
@@ -199,7 +201,7 @@ class NotificationService {
     final now = DateTime.now();
 
     // Schedule for the next 7 days ahead (35 prayer alarms queued)
-    for (int dayOffset = 0; dayOffset < 7; dayOffset++) {
+    for (int dayOffset = 0; dayOffset < 2; dayOffset++) {
       final date = now.add(Duration(days: dayOffset));
       final prayerTimes = PrayerTimesService.getPrayerTimes(
         latitude: latitude,
@@ -249,6 +251,10 @@ class NotificationService {
     required String soundType,
   }) async {
     final tzScheduledTime = tz.TZDateTime.from(scheduledTime, tz.local);
+    final tzNow = tz.TZDateTime.now(tz.local);
+    if (tzScheduledTime.isBefore(tzNow) || tzScheduledTime.isAtSameMomentAs(tzNow)) {
+      return;
+    }
 
     String rawSoundName = 'ezan_normal';
     if (soundType == 'fast') {
@@ -276,6 +282,7 @@ class NotificationService {
       autoCancel: true,
       ongoing: false,
       audioAttributesUsage: AudioAttributesUsage.alarm,
+      timeoutAfter: 4 * 60 * 1000,
       visibility: NotificationVisibility.public,
     );
 
@@ -384,6 +391,7 @@ class NotificationService {
       autoCancel: true,
       ongoing: false,
       audioAttributesUsage: AudioAttributesUsage.alarm,
+      timeoutAfter: 4 * 60 * 1000,
       visibility: NotificationVisibility.public,
     );
 
@@ -461,6 +469,7 @@ class NotificationService {
       autoCancel: true,
       ongoing: false,
       audioAttributesUsage: AudioAttributesUsage.alarm,
+      timeoutAfter: 4 * 60 * 1000,
       visibility: NotificationVisibility.public,
     );
 
