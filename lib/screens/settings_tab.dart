@@ -10,8 +10,8 @@ import 'package:url_launcher/url_launcher.dart';
 class SettingsTab extends StatelessWidget {
   const SettingsTab({super.key});
 
-  static const String appVersionName = '1.0.26';
-  static const String appBuildNumber = '28';
+  static const String appVersionName = '1.0.27';
+  static const String appBuildNumber = '29';
   static const String androidPackageId = 'com.omrkr.namaz.ogreniyorum.app';
   static const String iosAppId = '6737516890';
 
@@ -1076,43 +1076,44 @@ class SettingsTab extends StatelessWidget {
     final storeName = isIos ? 'App Store' : 'Google Play';
 
     final rateTitle = lang == 'tr'
-        ? 'Uygulamayı Değerlendir (5 Yıldız Ver ⭐)'
+        ? '5 Yıldız Ver ⭐'
         : lang == 'en'
-            ? 'Rate the App (Give 5 Stars ⭐)'
+            ? 'Give 5 Stars ⭐'
             : lang == 'de'
-                ? 'App bewerten (5 Sterne ⭐)'
+                ? '5 Sterne geben ⭐'
                 : lang == 'fr'
-                    ? 'Noter l\'application (5 étoiles ⭐)'
+                    ? 'Donner 5 étoiles ⭐'
                     : lang == 'es'
-                        ? 'Calificar la aplicación (5 estrellas ⭐)'
+                        ? 'Dar 5 estrellas ⭐'
                         : lang == 'id'
-                            ? 'Beri Nilai Aplikasi (5 Bintang ⭐)'
+                            ? 'Beri 5 Bintang ⭐'
                             : lang == 'ru'
-                                ? 'Оценить приложение (5 звезд ⭐)'
+                                ? 'Поставить 5 звезд ⭐'
                                 : lang == 'it'
-                                    ? 'Valuta l\'app (5 stelle ⭐)'
+                                    ? 'Lascia 5 stelle ⭐'
                                     : lang == 'ur'
-                                        ? 'ایپ کی درجہ بندی کریں (5 ستارے ⭐)'
-                                        : 'Rate the App (5 Stars ⭐)';
+                                        ? '5 ستارے دیں ⭐'
+                                        : 'Give 5 Stars ⭐';
 
     final rateSub = lang == 'tr'
-        ? '$storeName üzerinde puan vererek bize destek olun.'
+        ? '$storeName üzerinde bizi değerlendirin.'
         : lang == 'en'
-            ? 'Support our work by leaving a review on $storeName.'
+            ? 'Review us on $storeName.'
             : lang == 'de'
-                ? 'Unterstützen Sie uns durch eine Bewertung im $storeName.'
+                ? 'Bewerten Sie uns im $storeName.'
                 : lang == 'fr'
-                    ? 'Soutenez-nous en notant sur $storeName.'
+                    ? 'Notez-nous sur $storeName.'
                     : lang == 'es'
-                        ? 'Apóyanos calificando en $storeName.'
+                        ? 'Califícanos en $storeName.'
                         : lang == 'id'
-                            ? 'Dukung kami dengan memberi ulasan di $storeName.'
+                            ? 'Beri ulasan di $storeName.'
                             : lang == 'ru'
-                                ? 'Поддержите нас отзывом в $storeName.'
+                                ? 'Оцените нас в $storeName.'
                                 : lang == 'it'
-                                    ? 'Supportaci con una recensione su $storeName.'
+                                    ? 'Valutaci su $storeName.'
                                     : lang == 'ur'
-                                        ? '$storeName پر جائزہ دے کر ہماری مدد کریں۔'
+                                        ? '$storeName پر جائزہ دیں۔'
+                                        : 'Review us on $storeName.';
                                         : 'Support us with a review on $storeName.';
 
     return _buildMockupTile(
