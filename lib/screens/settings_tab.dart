@@ -10,66 +10,375 @@ import 'package:url_launcher/url_launcher.dart';
 class SettingsTab extends StatelessWidget {
   const SettingsTab({super.key});
 
+  static const String appVersionName = '1.0.26';
+  static const String appBuildNumber = '28';
+  static const String androidPackageId = 'com.omrkr.namaz.ogreniyorum.app';
+  static const String iosAppId = '6737516890';
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AppProvider>(context);
     final isDark = provider.isDarkMode;
     final lang = provider.languageCode;
 
-    // ──── Localized labels ────
-    final profileHeader = lang == 'tr' ? 'Eğitim Profili' : lang == 'de' ? 'Lernprofil' : lang == 'fr' ? 'Profil d\'apprentissage' : lang == 'es' ? 'Perfil de aprendizaje' : lang == 'id' ? 'Profil Belajar' : lang == 'ru' ? 'Профиль обучения' : lang == 'it' ? 'Profilo di apprendimento' : lang == 'ur' ? 'سیکھنے کا پروفائل' : 'Learning Profile';
-    final systemHeader = lang == 'tr' ? 'Sistem Ayarları' : lang == 'de' ? 'Systemeinstellungen' : lang == 'fr' ? 'Paramètres système' : lang == 'es' ? 'Configuración del sistema' : lang == 'id' ? 'Pengaturan Sistem' : lang == 'ru' ? 'Системные настройки' : lang == 'it' ? 'Impostazioni di sistema' : lang == 'ur' ? 'سسٹم کی ترتیبات' : 'System Settings';
-    final languageHeader = lang == 'tr' ? 'Dil / Language' : lang == 'id' ? 'Bahasa / Language' : lang == 'ru' ? 'Язык / Language' : lang == 'it' ? 'Lingua / Language' : lang == 'ur' ? 'زبان / Language' : 'Language / Dil';
-
-    final mezTitle = lang == 'tr' ? 'Fıkıh Mezhebi' : lang == 'de' ? 'Rechtsschule (Mezhep)' : lang == 'fr' ? 'École juridique (Mezhep)' : lang == 'es' ? 'Escuela jurídica (Mezhep)' : lang == 'id' ? 'Mazhab Fiqh' : lang == 'ru' ? 'Школа юриспруденции (Мазхаб)' : lang == 'it' ? 'Scuola di Giurisprudenza (Madhhab)' : lang == 'ur' ? 'فقہی مکتب فکر' : 'School of Jurisprudence';
-    final mezDesc = lang == 'tr' ? 'Namaz rekatları ve duaları seçtiğiniz mezhebe göre uyarlanır.' : lang == 'de' ? 'Gebetsrakats und Bittgebete passen sich der ausgewählten Rechtsschule an.' : lang == 'fr' ? 'Les rakats de prière et les invocations s\'adaptent à l\'école choisie.' : lang == 'es' ? 'Los rakats de oración y súplicas se adaptan a la escuela seleccionada.' : lang == 'id' ? 'Rakaat shalat dan doa disesuaikan dengan mazhab yang dipilih.' : lang == 'ru' ? 'Ракааты молитвы и молитвы адаптируются в зависимости от выбранной школы.' : lang == 'it' ? 'I rakat della preghiera e le suppliche sono adattati in base alla scuola selezionata.' : lang == 'ur' ? 'نماز کی رکعات اور دعائیں منتخب کردہ مکتب فکر کے مطابق تیار کی گئی ہیں۔' : 'Prayer rakats and supplications are adapted according to the selected school.';
-
-    final genderTitle = lang == 'tr' ? 'Kılınış Şekli (Cinsiyet)' : lang == 'de' ? 'Gebetsweise (Geschlecht)' : lang == 'fr' ? 'Mode de prière (Sexe)' : lang == 'es' ? 'Estilo de oración (Género)' : lang == 'id' ? 'Gaya Shalat (Gender)' : lang == 'ru' ? 'Стиль молитвы (Пол)' : lang == 'it' ? 'Stile di preghiera (Genere)' : lang == 'ur' ? 'نماز کا طریقہ (صنف)' : 'Prayer Style (Gender)';
-    final genderDesc = lang == 'tr' ? 'Duruşlar ve el bağlama kuralları seçtiğiniz kılınışa göre değişir.' : lang == 'de' ? 'Körperhaltungen und Handregeln ändern sich je nach gewählter Gebetsweise.' : lang == 'fr' ? 'Les postures et les règles de position des mains changent selon le mode choisi.' : lang == 'es' ? 'Las posturas y reglas de posición de manos cambian según el estilo elegido.' : lang == 'id' ? 'Postur dan aturan posisi tangan berubah sesuai dengan gaya shalat yang dipilih.' : lang == 'ru' ? 'Позы и правила положения рук меняются в зависимости от выбранного стиля молитвы.' : lang == 'it' ? 'Le posture e le regole di posizionamento delle mani cambiano in base allo stile di preghiera selezionato.' : lang == 'ur' ? 'منتخب کردہ نماز کے طریقے کی بنیاد پر کرنسیوں اور ہاتھ کی پوزیشن کے اصول تبدیل ہوتے ہیں۔' : 'Postures and hand positioning rules change based on the selected prayer style.';
-
-    final maleLabel = lang == 'tr' ? 'Erkek' : lang == 'de' ? 'Mann' : lang == 'fr' ? 'Homme' : lang == 'es' ? 'Hombre' : lang == 'id' ? 'Laki-laki' : lang == 'ru' ? 'Мужчина' : lang == 'it' ? 'Uomo' : lang == 'ur' ? 'مرد' : 'Male';
-    final femaleLabel = lang == 'tr' ? 'Kadın' : lang == 'de' ? 'Frau' : lang == 'fr' ? 'Femme' : lang == 'es' ? 'Mujer' : lang == 'id' ? 'Perempuan' : lang == 'ru' ? 'Женщина' : lang == 'it' ? 'Donna' : lang == 'ur' ? 'عورت' : 'Female';
-
-    final remindersLabel = lang == 'tr' ? 'Hatırlatıcılar' : lang == 'de' ? 'Erinnerungen' : lang == 'fr' ? 'Rappels' : lang == 'es' ? 'Recordatorios' : lang == 'id' ? 'Pengingat' : lang == 'ru' ? 'Напоминания' : lang == 'it' ? 'Promemoria' : lang == 'ur' ? 'یاد دہانیاں' : 'Reminders';
-    final remindersSub = lang == 'tr' ? 'Namaz vakitleri hatırlatıcıları' : lang == 'de' ? 'Gebetszeiterinnerungen' : lang == 'fr' ? 'Rappels des horaires de prière' : lang == 'es' ? 'Recordatorios de horarios de oración' : lang == 'id' ? 'Pengingat waktu shalat' : lang == 'ru' ? 'Напоминания о времени молитвы' : lang == 'it' ? 'Promemoria per gli orari di preghiera' : lang == 'ur' ? 'نماز کے اوقات کی یاد دہانیاں' : 'Prayer time reminders';
-
-    final notifLabel = lang == 'tr' ? 'Bildirimler' : lang == 'de' ? 'Benachrichtigungen' : lang == 'fr' ? 'Notifications' : lang == 'es' ? 'Notificaciones' : lang == 'id' ? 'Notifikasi' : lang == 'ru' ? 'Уведомления' : lang == 'it' ? 'Notifiche' : lang == 'ur' ? 'اطلاعات' : 'Notifications';
-    final notifSub = lang == 'tr' ? 'Bildirim tercihlerinizi yönetin' : lang == 'de' ? 'Ihre Benachrichtigungseinstellungen verwalten' : lang == 'fr' ? 'Gérer vos préférences de notification' : lang == 'es' ? 'Administrar sus preferencias de notification' : lang == 'id' ? 'Kelola preferensi notifikasi Anda' : lang == 'ru' ? 'Управление настройками уведомлений' : lang == 'it' ? 'Gestisci le tue preferenze di notifica' : lang == 'ur' ? 'اپنی اطلاع کی ترجیحات کا نظم کریں' : 'Manage your notification preferences';
-
-    final themeLabel = lang == 'tr' ? 'Tema' : lang == 'de' ? 'Design' : lang == 'fr' ? 'Thème' : lang == 'es' ? 'Tema' : lang == 'id' ? 'Tema' : lang == 'ru' ? 'Тема' : lang == 'it' ? 'Tema' : lang == 'ur' ? 'تھیم' : 'Theme';
-    final themeSub = isDark
-        ? (lang == 'tr' ? 'Karanlık tema aktif' : lang == 'de' ? 'Dunkles Design aktiv' : lang == 'fr' ? 'Thème sombre actif' : lang == 'es' ? 'Tema oscuro activo' : lang == 'id' ? 'Tema gelap aktif' : lang == 'ru' ? 'Темная тема активна' : lang == 'it' ? 'Tema scuro attivo' : lang == 'ur' ? 'ڈارک تھیم فعال ہے' : 'Dark theme active')
-        : (lang == 'tr' ? 'Açık tema aktif' : lang == 'de' ? 'Helles Design aktiv' : lang == 'fr' ? 'Thème clair actif' : lang == 'es' ? 'Tema claro activo' : lang == 'id' ? 'Tema terang aktif' : lang == 'ru' ? 'Светлая тема активна' : lang == 'it' ? 'Tema chiaro attivo' : lang == 'ur' ? 'لائٹ تھیم فعال ہے' : 'Light theme active');
-
-    final backupLabel = lang == 'tr' ? 'Yedekle ve Geri Yükle' : lang == 'de' ? 'Sichern & Wiederherstellen' : lang == 'fr' ? 'Sauvegarder & Restaurer' : lang == 'es' ? 'Copia de seguridad y restaurar' : lang == 'id' ? 'Cadangkan & Pulihkan' : lang == 'ru' ? 'Резервное копирование и восстановление' : lang == 'it' ? 'Backup e ripristino' : lang == 'ur' ? 'بیک اپ اور بحال' : 'Backup & Restore';
-    final backupSub = lang == 'tr' ? 'Verilerinizi yedekleyin' : lang == 'de' ? 'Ihre Daten sichern' : lang == 'fr' ? 'Sauvegarder vos données' : lang == 'es' ? 'Hacer una copia de seguridad de sus datos' : lang == 'id' ? 'Cadangkan data Anda' : lang == 'ru' ? 'Резервное копирование данных' : lang == 'it' ? 'Fai il backup dei tuoi dati' : lang == 'ur' ? 'اپنے ڈیٹا کا بیک اپ لیں' : 'Back up your data';
-
-    final aboutLabel = lang == 'tr' ? 'Hakkımızda' : lang == 'de' ? 'Über uns' : lang == 'fr' ? 'À propos' : lang == 'es' ? 'Acerca de' : lang == 'id' ? 'Tentang Kami' : lang == 'ru' ? 'О нас' : lang == 'it' ? 'Informazioni' : lang == 'ur' ? 'ہمارے بارے میں' : 'About';
-    final aboutSub = lang == 'tr' ? 'Uygulama hakkında bilgi' : lang == 'de' ? 'Informationen zur App' : lang == 'fr' ? 'Informations sur l\'application' : lang == 'es' ? 'Información sobre la aplicación' : lang == 'id' ? 'Informasi tentang aplikasi' : lang == 'ru' ? 'Информация о приложении' : lang == 'it' ? 'Informazioni sull\'app' : lang == 'ur' ? 'ایپ کے بارے میں معلومات' : 'Information about the app';
-    final aboutContent = lang == 'tr'
-        ? 'Namaz kılmayı, abdest almayı, namaz dualarını ve surelerini sesli okunuşları ve anlamlarıyla beraber en sade ve doğru biçimde öğreten mobil kılavuz uygulamanız.'
+    // ──── Localized headers ────
+    final profileHeader = lang == 'tr'
+        ? 'Eğitim Profili'
         : lang == 'de'
-            ? 'Ihre mobile Leitfaden-App, die Ihnen auf einfachste und korrekteste Weise beibringt, wie man betet, Wudu macht und Gebete und Suren mit Aussprache und Bedeutung lernt.'
+            ? 'Lernprofil'
             : lang == 'fr'
-                ? 'Votre application guide mobile qui vous enseigne de la manière la plus simple et correcte comment prier, faire les ablutions, et apprendre les invocations et sourates avec prononciation et signification.'
+                ? 'Profil d\'apprentissage'
                 : lang == 'es'
-                    ? 'Su aplicación guía móvil que le enseña de la manera más sencilla y correcta cómo rezar, hacer el wudu y aprender las súplicas y suras con pronunciación y significado.'
+                    ? 'Perfil de aprendizaje'
                     : lang == 'id'
-                        ? 'Aplikasi panduan seluler Anda yang mengajarkan Anda dengan cara paling sederhana dan paling benar bagaimana cara shalat, melakukan wudu, dan belajar doa dan surah dengan pengucapan dan makna.'
+                        ? 'Profil Belajar'
                         : lang == 'ru'
-                            ? 'Ваше мобильное приложение-руководство, которое учит вас самым простым и правильным способом, как молиться, совершать омовение, а также изучать молитвы и суры с произношением и значением.'
+                            ? 'Профиль обучения'
                             : lang == 'it'
-                                ? 'La tua app guida mobile che ti insegna nel modo più semplice e corretto come pregare, fare il wudu e imparare le preghiere e le sure con pronuncia e significato.'
+                                ? 'Profilo di apprendimento'
                                 : lang == 'ur'
-                                    ? 'آپ کی موبائل گائیڈ ایپ جو آپ کو سب سے آسان اور صحیح طریقے سے سکھاتی ہے کہ نماز کیسے پڑھیں، وضو کیسے کریں، اور تلفظ اور معنی کے ساتھ دعائیں اور سورتیں سیکھیں۔'
-                                    : 'Your mobile guide app that teaches you in the simplest and most correct way how to pray, perform wudu, and learn prayers and surahs with pronunciation and meaning.';
+                                    ? 'سیکھنے کا پروفائل'
+                                    : 'Learning Profile';
 
-    final rateLabel = lang == 'tr' ? 'Puan Ver' : lang == 'de' ? 'Bewerten' : lang == 'fr' ? 'Évaluer' : lang == 'es' ? 'Calificar' : lang == 'id' ? 'Nilai Kami' : lang == 'ru' ? 'Оцените нас' : lang == 'it' ? 'Valutaci' : lang == 'ur' ? 'ہمیں درجہ دیں' : 'Rate Us';
-    final rateSub = lang == 'tr' ? 'Uygulamamızı değerlendirin' : lang == 'de' ? 'Unsere App bewerten' : lang == 'fr' ? 'Évaluer notre application' : lang == 'es' ? 'Evaluar nuestra aplicación' : lang == 'id' ? 'Evaluasi aplikasi kami' : lang == 'ru' ? 'Оцените наше приложение' : lang == 'it' ? 'Valuta la nostra applicazione' : lang == 'ur' ? 'ہماری ایپ کا جائزہ لیں' : 'Rate our application';
+    final systemHeader = lang == 'tr'
+        ? 'Sistem ve Uygulama Ayarları'
+        : lang == 'de'
+            ? 'System- & App-Einstellungen'
+            : lang == 'fr'
+                ? 'Paramètres système et application'
+                : lang == 'es'
+                    ? 'Configuración del sistema'
+                    : lang == 'id'
+                        ? 'Pengaturan Sistem'
+                        : lang == 'ru'
+                            ? 'Системные настройки'
+                            : lang == 'it'
+                                ? 'Impostazioni di sistema'
+                                : lang == 'ur'
+                                    ? 'سسٹم کی ترتیبات'
+                                    : 'System Settings';
 
-    final wizardLabel = lang == 'tr' ? 'Sihirbazı Sıfırla' : lang == 'de' ? 'Einrichtungsassistent zurücksetzen' : lang == 'fr' ? 'Réinitialiser l\'assistant' : lang == 'es' ? 'Restablecer el asistente' : lang == 'id' ? 'Setel Ulang Asisten' : lang == 'ru' ? 'Сбросить мастера' : lang == 'it' ? 'Ripristina procedura guidata' : lang == 'ur' ? 'وزرڈ کو دوبارہ ترتیب دیں' : 'Reset Wizard';
-    final wizardSub = lang == 'tr' ? 'İlk adım seçim kılavuzunu yeniden açar' : lang == 'de' ? 'Öffnet den Einrichtungsassistenten erneut' : lang == 'fr' ? 'Rouvre le guide de configuration initial' : lang == 'es' ? 'Vuelve a abrir la guía de configuración inicial' : lang == 'id' ? 'Buka kembali panduan pengaturan awal' : lang == 'ru' ? 'Вновь открывает начальное руководство по настройке' : lang == 'it' ? 'Riapre la guida alla configurazione iniziale' : lang == 'ur' ? 'ابتدائی سیٹ اپ گائیڈ کو دوبارہ کھولتا ہے' : 'Reopens the initial setup guide';
-    final wizardConfirmTitle = lang == 'tr' ? 'Sihirbazı Sıfırla' : lang == 'de' ? 'Assistent zurücksetzen' : lang == 'fr' ? 'Réinitialiser l\'assistant' : lang == 'es' ? 'Restablecer el asistente' : lang == 'id' ? 'Setel Ulang Asisten' : lang == 'ru' ? 'Сбросить мастера' : lang == 'it' ? 'Ripristina procedura guidata' : lang == 'ur' ? 'وزرڈ کو دوبارہ ترتیب دیں' : 'Reset Wizard';
+    final languageHeader = lang == 'tr'
+        ? 'Dil / Language'
+        : lang == 'id'
+            ? 'Bahasa / Language'
+            : lang == 'ru'
+                ? 'Язык / Language'
+                : lang == 'it'
+                    ? 'Lingua / Language'
+                    : lang == 'ur'
+                        ? 'زبان / Language'
+                        : 'Language / Dil';
+
+    // ──── Localized items ────
+    final mezTitle = lang == 'tr'
+        ? 'Fıkıh Mezhebi'
+        : lang == 'de'
+            ? 'Rechtsschule (Mezhep)'
+            : lang == 'fr'
+                ? 'École juridique (Mezhep)'
+                : lang == 'es'
+                    ? 'Escuela jurídica (Mezhep)'
+                    : lang == 'id'
+                        ? 'Mazhab Fiqh'
+                        : lang == 'ru'
+                            ? 'Школа юриспруденции (Мазхаб)'
+                            : lang == 'it'
+                                ? 'Scuola di Giurisprudenza (Madhhab)'
+                                : lang == 'ur'
+                                    ? 'فقہی مکتب فکر'
+                                    : 'School of Jurisprudence';
+
+    final mezDesc = lang == 'tr'
+        ? 'Namaz rekatları ve duaları seçtiğiniz mezhebe göre uyarlanır.'
+        : lang == 'de'
+            ? 'Gebetsrakats und Bittgebete passen sich der ausgewählten Rechtsschule an.'
+            : lang == 'fr'
+                ? 'Les rakats de prière et les invocations s\'adaptent à l\'école choisie.'
+                : lang == 'es'
+                    ? 'Los rakats de oración y súplicas se adaptan a la escuela seleccionada.'
+                    : lang == 'id'
+                        ? 'Rakaat shalat dan doa disesuaikan dengan mazhab yang dipilih.'
+                        : lang == 'ru'
+                            ? 'Ракааты молитвы и молитвы адаптируются в зависимости от выбранной школы.'
+                            : lang == 'it'
+                                ? 'I rakat della preghiera e le suppliche sono adattati in base alla scuola selezionata.'
+                                : lang == 'ur'
+                                    ? 'نماز کی رکعات اور دعائیں منتخب کردہ مکتب فکر کے مطابق تیار کی گئی ہیں۔'
+                                    : 'Prayer rakats and supplications are adapted according to the selected school.';
+
+    final genderTitle = lang == 'tr'
+        ? 'Kılınış Şekli (Cinsiyet)'
+        : lang == 'de'
+            ? 'Gebetsweise (Geschlecht)'
+            : lang == 'fr'
+                ? 'Mode de prière (Sexe)'
+                : lang == 'es'
+                    ? 'Estilo de oración (Género)'
+                    : lang == 'id'
+                        ? 'Gaya Shalat (Gender)'
+                        : lang == 'ru'
+                            ? 'Стиль молитвы (Пол)'
+                            : lang == 'it'
+                                ? 'Stile di preghiera (Genere)'
+                                : lang == 'ur'
+                                    ? 'نماز کا طریقہ (صنف)'
+                                    : 'Prayer Style (Gender)';
+
+    final genderDesc = lang == 'tr'
+        ? 'Duruşlar ve el bağlama kuralları seçtiğiniz kılınışa göre değişir.'
+        : lang == 'de'
+            ? 'Körperhaltungen und Handregeln ändern sich je nach gewählter Gebetsweise.'
+            : lang == 'fr'
+                ? 'Les postures et les règles de position des mains changent selon le mode choisi.'
+                : lang == 'es'
+                    ? 'Las posturas y reglas de posición de manos cambian según el estilo elegido.'
+                    : lang == 'id'
+                        ? 'Postur dan aturan posisi tangan berubah sesuai dengan gaya shalat yang dipilih.'
+                        : lang == 'ru'
+                            ? 'Позы и правила положения рук меняются в зависимости от выбранного стиля молитвы.'
+                            : lang == 'it'
+                                ? 'Le posture e le regole di posizionamento delle mani cambiano in base allo stile di preghiera selezionato.'
+                                : lang == 'ur'
+                                    ? 'منتخب کردہ نماز کے طریقے کی بنیاد پر کرنسیوں اور ہاتھ کی پوزیشن کے اصول تبدیل ہوتے ہیں۔'
+                                    : 'Postures and hand positioning rules change based on the selected prayer style.';
+
+    final maleLabel = lang == 'tr'
+        ? 'Erkek'
+        : lang == 'de'
+            ? 'Mann'
+            : lang == 'fr'
+                ? 'Homme'
+                : lang == 'es'
+                    ? 'Hombre'
+                    : lang == 'id'
+                        ? 'Laki-laki'
+                        : lang == 'ru'
+                            ? 'Мужчина'
+                            : lang == 'it'
+                                ? 'Uomo'
+                                : lang == 'ur'
+                                    ? 'مرد'
+                                    : 'Male';
+
+    final femaleLabel = lang == 'tr'
+        ? 'Kadın'
+        : lang == 'de'
+            ? 'Frau'
+            : lang == 'fr'
+                ? 'Femme'
+                : lang == 'es'
+                    ? 'Mujer'
+                    : lang == 'id'
+                        ? 'Perempuan'
+                        : lang == 'ru'
+                            ? 'Женщина'
+                            : lang == 'it'
+                                ? 'Donna'
+                                : lang == 'ur'
+                                    ? 'عورت'
+                                    : 'Female';
+
+    // Single unified notification title & subtitle (replaces duplicate Hatırlatıcılar & Bildirimler)
+    final notifLabel = lang == 'tr'
+        ? 'Ezan & Vakit Bildirimleri'
+        : lang == 'de'
+            ? 'Gebetsruf- & Zeiterinnerungen'
+            : lang == 'fr'
+                ? 'Alertes Adhan & Horaires de Prière'
+                : lang == 'es'
+                    ? 'Alertas de Adhān y Horarios'
+                    : lang == 'id'
+                        ? 'Notifikasi Adzan & Waktu Shalat'
+                        : lang == 'ru'
+                            ? 'Оповещения об Азане и времени'
+                            : lang == 'it'
+                                ? 'Notifiche Adhan e Orari'
+                                : lang == 'ur'
+                                    ? 'اذان اور اوقات کی اطلاعات'
+                                    : 'Adhan & Prayer Time Alerts';
+
+    final notifSub = lang == 'tr'
+        ? 'Ezan alarm sesleri, vakit bildirimleri ve titreşim ayarları'
+        : lang == 'de'
+            ? 'Gebetsruftöne, Benachrichtigungen und Vibrationseinstellungen'
+            : lang == 'fr'
+                ? 'Sons d\'appel à la prière, alertes et vibrations'
+                : lang == 'es'
+                    ? 'Sonidos de alarma, notificaciones y vibración'
+                    : lang == 'id'
+                        ? 'Suara adzan, pengingat shalat dan pengaturan getar'
+                        : lang == 'ru'
+                            ? 'Звуки азана, напоминания и настройки вибрации'
+                            : lang == 'it'
+                                ? 'Suoni dell\'Adhan, avvisi e vibrazione'
+                                : lang == 'ur'
+                                    ? 'اذان کی آوازیں اور اطلاع کی ترتیبات'
+                                    : 'Adhan alarm sounds, prayer alerts and vibration';
+
+    final themeLabel = lang == 'tr'
+        ? 'Tema'
+        : lang == 'de'
+            ? 'Design'
+            : lang == 'fr'
+                ? 'Thème'
+                : lang == 'es'
+                    ? 'Tema'
+                    : lang == 'id'
+                        ? 'Tema'
+                        : lang == 'ru'
+                            ? 'Тема'
+                            : lang == 'it'
+                                ? 'Tema'
+                                : lang == 'ur'
+                                    ? 'تھیم'
+                                    : 'Theme';
+
+    final themeSub = isDark
+        ? (lang == 'tr'
+            ? 'Karanlık tema aktif'
+            : lang == 'de'
+                ? 'Dunkles Design aktiv'
+                : lang == 'fr'
+                    ? 'Thème sombre actif'
+                    : lang == 'es'
+                        ? 'Tema oscuro activo'
+                        : lang == 'id'
+                            ? 'Tema gelap aktif'
+                            : lang == 'ru'
+                                ? 'Темная тема активна'
+                                : lang == 'it'
+                                    ? 'Tema scuro attivo'
+                                    : lang == 'ur'
+                                        ? 'ڈارک تھیم فعال ہے'
+                                        : 'Dark theme active')
+        : (lang == 'tr'
+            ? 'Açık tema aktif'
+            : lang == 'de'
+                ? 'Helles Design aktiv'
+                : lang == 'fr'
+                    ? 'Thème clair actif'
+                    : lang == 'es'
+                        ? 'Tema claro activo'
+                        : lang == 'id'
+                            ? 'Tema terang aktif'
+                            : lang == 'ru'
+                                ? 'Светлая тема активна'
+                                : lang == 'it'
+                                    ? 'Tema chiaro attivo'
+                                    : lang == 'ur'
+                                        ? 'لائٹ تھیم فعال ہے'
+                                        : 'Light theme active');
+
+    final backupLabel = lang == 'tr'
+        ? 'Yedekle ve Geri Yükle'
+        : lang == 'de'
+            ? 'Sichern & Wiederherstellen'
+            : lang == 'fr'
+                ? 'Sauvegarder & Restaurer'
+                : lang == 'es'
+                    ? 'Copia de seguridad y restaurar'
+                    : lang == 'id'
+                        ? 'Cadangkan & Pulihkan'
+                        : lang == 'ru'
+                            ? 'Резервное копирование и восстановление'
+                            : lang == 'it'
+                                ? 'Backup e ripristino'
+                                : lang == 'ur'
+                                    ? 'بیک اپ اور بحال'
+                                    : 'Backup & Restore';
+
+    final backupSub = lang == 'tr'
+        ? 'Verilerinizi güvenle yedekleyin'
+        : lang == 'de'
+            ? 'Ihre Daten sichern'
+            : lang == 'fr'
+                ? 'Sauvegarder vos données'
+                : lang == 'es'
+                    ? 'Hacer una copia de seguridad'
+                    : lang == 'id'
+                        ? 'Cadangkan data Anda'
+                        : lang == 'ru'
+                            ? 'Резервное копирование данных'
+                            : lang == 'it'
+                                ? 'Fai il backup dei tuoi dati'
+                                : lang == 'ur'
+                                    ? 'اپنے ڈیٹا کا بیک اپ لیں'
+                                    : 'Back up your data';
+
+    final aboutLabel = lang == 'tr'
+        ? 'Hakkımızda'
+        : lang == 'de'
+            ? 'Über uns'
+            : lang == 'fr'
+                ? 'À propos'
+                : lang == 'es'
+                    ? 'Acerca de'
+                    : lang == 'id'
+                        ? 'Tentang Kami'
+                        : lang == 'ru'
+                            ? 'О нас'
+                            : lang == 'it'
+                                ? 'Informazioni'
+                                : lang == 'ur'
+                                    ? 'ہمارے بارے میں'
+                                    : 'About';
+
+    final aboutSub = lang == 'tr'
+        ? 'Namazı Öğreniyorum v$appVersionName ($appBuildNumber)'
+        : lang == 'de'
+            ? 'App-Details v$appVersionName ($appBuildNumber)'
+            : lang == 'fr'
+                ? 'Détails de l\'application v$appVersionName ($appBuildNumber)'
+                : lang == 'es'
+                    ? 'Detalles de la app v$appVersionName ($appBuildNumber)'
+                    : lang == 'id'
+                        ? 'Informasi Aplikasi v$appVersionName ($appBuildNumber)'
+                        : lang == 'ru'
+                            ? 'О приложении v$appVersionName ($appBuildNumber)'
+                            : lang == 'it'
+                                ? 'Informazioni sull\'app v$appVersionName ($appBuildNumber)'
+                                : lang == 'ur'
+                                    ? 'ایپ کی تفصیلات v$appVersionName ($appBuildNumber)'
+                                    : 'App Information v$appVersionName ($appBuildNumber)';
+
+    final wizardLabel = lang == 'tr'
+        ? 'Sihirbazı Sıfırla'
+        : lang == 'de'
+            ? 'Einrichtungsassistent zurücksetzen'
+            : lang == 'fr'
+                ? 'Réinitialiser l\'assistant'
+                : lang == 'es'
+                    ? 'Restablecer el asistente'
+                    : lang == 'id'
+                        ? 'Setel Ulang Asisten'
+                        : lang == 'ru'
+                            ? 'Сбросить мастера'
+                            : lang == 'it'
+                                ? 'Ripristina procedura guidata'
+                                : lang == 'ur'
+                                    ? 'وزرڈ کو دوبارہ ترتیب دیں'
+                                    : 'Reset Wizard';
+
+    final wizardSub = lang == 'tr'
+        ? 'İlk adım seçim kılavuzunu yeniden açar'
+        : lang == 'de'
+            ? 'Öffnet den Einrichtungsassistenten erneut'
+            : lang == 'fr'
+                ? 'Rouvre le guide de configuration initial'
+                : lang == 'es'
+                    ? 'Vuelve a abrir la guía de configuración inicial'
+                    : lang == 'id'
+                        ? 'Buka kembali panduan pengaturan awal'
+                        : lang == 'ru'
+                            ? 'Вновь открывает начальное руководство по настройке'
+                            : lang == 'it'
+                                ? 'Riapre la guida alla configurazione iniziale'
+                                : lang == 'ur'
+                                    ? 'ابتدائی سیٹ اپ گائیڈ کو دوبارہ کھولتا ہے'
+                                    : 'Reopens the initial setup guide';
+
+    final wizardConfirmTitle = wizardLabel;
     final wizardConfirmBody = lang == 'tr'
         ? 'Kurulum sihirbazını sıfırlamak istediğinizden emin misiniz? Dil, mezhep ve kılınış şekli seçim adımlarını baştan yapmanız gerekecektir.'
         : lang == 'de'
@@ -87,8 +396,43 @@ class SettingsTab extends StatelessWidget {
                                 : lang == 'ur'
                                     ? 'کیا آپ واقعی سیٹ اپ وزرڈ کو دوبارہ ترتیب دینا چاہتے ہیں؟ آپ کو زبان، مکتب فکر اور نماز کے طریقے کے انتخاب کے مراحل دوبارہ کرنے ہوں گے۔'
                                     : 'Are you sure you want to reset the setup wizard? You will need to redo the language, school, and prayer style selection steps.';
-    final cancelLabel = lang == 'tr' ? 'Vazgeç' : lang == 'de' ? 'Abbrechen' : lang == 'fr' ? 'Annuler' : lang == 'es' ? 'Cancelar' : lang == 'id' ? 'Batal' : lang == 'ru' ? 'Отмена' : lang == 'it' ? 'Annulla' : lang == 'ur' ? 'منسوخ کریں' : 'Cancel';
-    final confirmLabel = lang == 'tr' ? 'Evet, Sıfırla' : lang == 'de' ? 'Ja, zurücksetzen' : lang == 'fr' ? 'Oui, réinitialiser' : lang == 'es' ? 'Sí, restablecer' : lang == 'id' ? 'Ya, Setel Ulang' : lang == 'ru' ? 'Да, сбросить' : lang == 'it' ? 'Sì, ripristina' : lang == 'ur' ? 'ہاں، دوبارہ ترتیب دیں' : 'Yes, Reset';
+
+    final cancelLabel = lang == 'tr'
+        ? 'Vazgeç'
+        : lang == 'de'
+            ? 'Abbrechen'
+            : lang == 'fr'
+                ? 'Annuler'
+                : lang == 'es'
+                    ? 'Cancelar'
+                    : lang == 'id'
+                        ? 'Batal'
+                        : lang == 'ru'
+                            ? 'Отмена'
+                            : lang == 'it'
+                                ? 'Annulla'
+                                : lang == 'ur'
+                                    ? 'منسوخ کریں'
+                                    : 'Cancel';
+
+    final confirmLabel = lang == 'tr'
+        ? 'Evet, Sıfırla'
+        : lang == 'de'
+            ? 'Ja, zurücksetzen'
+            : lang == 'fr'
+                ? 'Oui, réinitialiser'
+                : lang == 'es'
+                    ? 'Sí, restablecer'
+                    : lang == 'id'
+                        ? 'Ya, Setel Ulang'
+                        : lang == 'ru'
+                            ? 'Да, сбросить'
+                            : lang == 'it'
+                                ? 'Sì, ripristina'
+                                : lang == 'ur'
+                                    ? 'ہاں، دوبارہ ترتیب دیں'
+                                    : 'Yes, Reset';
+
     final wizardResetSnack = lang == 'tr'
         ? 'Sihirbaz sıfırlandı. Ana sekmeden adımları tekrar geçebilirsiniz.'
         : lang == 'de'
@@ -106,7 +450,24 @@ class SettingsTab extends StatelessWidget {
                                 : lang == 'ur'
                                     ? 'وزرڈ دوبارہ ترتیب دیا گیا۔ آپ مرکزی ٹیب سے دوبارہ مراحل سے گزر سکتے ہیں۔'
                                     : 'Wizard reset. You can go through the steps again from the main tab.';
-    final okLabel = lang == 'tr' ? 'Tamam' : lang == 'de' ? 'OK' : lang == 'fr' ? 'D\'accord' : lang == 'es' ? 'Aceptar' : lang == 'id' ? 'OKE' : lang == 'ru' ? 'ОК' : lang == 'it' ? 'OK' : lang == 'ur' ? 'ٹھیک ہے' : 'OK';
+
+    final okLabel = lang == 'tr'
+        ? 'Tamam'
+        : lang == 'de'
+            ? 'OK'
+            : lang == 'fr'
+                ? 'D\'accord'
+                : lang == 'es'
+                    ? 'Aceptar'
+                    : lang == 'id'
+                        ? 'OKE'
+                        : lang == 'ru'
+                            ? 'ОК'
+                            : lang == 'it'
+                                ? 'OK'
+                                : lang == 'ur'
+                                    ? 'ٹھیک ہے'
+                                    : 'OK';
 
     return Scaffold(
       body: ListView(
@@ -116,8 +477,40 @@ class SettingsTab extends StatelessWidget {
           _buildSectionHeader(languageHeader, isDark),
           _buildSettingsCard(
             context,
-            title: lang == 'tr' ? 'Uygulama Dili' : lang == 'de' ? 'App-Sprache' : lang == 'fr' ? 'Langue de l\'application' : lang == 'es' ? 'Idioma de la aplicación' : lang == 'id' ? 'Bahasa Aplikasi' : lang == 'ru' ? 'Язык приложения' : lang == 'it' ? 'Lingua dell\'app' : lang == 'ur' ? 'ایپ کی زبان' : 'App Language',
-            description: lang == 'tr' ? 'Arayüz dili ve namaz kılavuzları seçtiğiniz dilde gösterilir.' : lang == 'de' ? 'Die Benutzeroberfläche und Gebetsanleitungen werden in der ausgewählten Sprache angezeigt.' : lang == 'fr' ? 'L\'interface et les guides de prière s\'affichent dans la langue choisie.' : lang == 'es' ? 'La interfaz y las guías de oración se muestran en el idioma seleccionado.' : lang == 'id' ? 'Antarmuka dan panduan shalat ditampilkan dalam bahasa yang dipilih.' : lang == 'ru' ? 'Интерфейс и руководства по молитве отображаются на выбранном языке.' : lang == 'it' ? 'L\'interfaccia e le guide di preghiera sono mostrate nella lingua selezionata.' : lang == 'ur' ? 'انٹرفیس اور نماز کی گائیڈز منتخب زبان میں دکھائی گئی ہیں۔' : 'The interface and prayer guides are shown in the selected language.',
+            title: lang == 'tr'
+                ? 'Uygulama Dili'
+                : lang == 'de'
+                    ? 'App-Sprache'
+                    : lang == 'fr'
+                        ? 'Langue de l\'application'
+                        : lang == 'es'
+                            ? 'Idioma de la aplicación'
+                            : lang == 'id'
+                                ? 'Bahasa Aplikasi'
+                                : lang == 'ru'
+                                    ? 'Язык приложения'
+                                    : lang == 'it'
+                                        ? 'Lingua dell\'app'
+                                        : lang == 'ur'
+                                            ? 'ایپ کی زبان'
+                                            : 'App Language',
+            description: lang == 'tr'
+                ? 'Arayüz dili ve namaz kılavuzları seçtiğiniz dilde gösterilir.'
+                : lang == 'de'
+                    ? 'Die Benutzeroberfläche und Gebetsanleitungen werden in der ausgewählten Sprache angezeigt.'
+                    : lang == 'fr'
+                        ? 'L\'interface et les guides de prière s\'affichent dans la langue choisie.'
+                        : lang == 'es'
+                            ? 'La interfaz y las guías de oración se muestran en el idioma seleccionado.'
+                            : lang == 'id'
+                                ? 'Antarmuka dan panduan shalat ditampilkan dalam bahasa yang dipilih.'
+                                : lang == 'ru'
+                                    ? 'Интерфейс и руководства по молитве отображаются на выбранном языке.'
+                                    : lang == 'it'
+                                        ? 'L\'interfaccia e le guide di preghiera sono mostrate nella lingua selezionata.'
+                                        : lang == 'ur'
+                                            ? 'انٹرفیس اور نماز کی گائیڈز منتخب زبان میں دکھائی گئی ہیں۔'
+                                            : 'The interface and prayer guides are shown in the selected language.',
             icon: Icons.language_outlined,
             child: Wrap(
               spacing: 8,
@@ -226,76 +619,49 @@ class SettingsTab extends StatelessWidget {
           // ── Section 2: System Settings ──
           _buildSectionHeader(systemHeader, isDark),
 
-          // 1. Reminders
-          _buildMockupTile(
-            context,
-            title: remindersLabel,
-            subtitle: remindersSub,
-            icon: Icons.alarm_on_outlined,
-            onTap: () => _showComingSoonDialog(context, remindersLabel, okLabel),
-            isDark: isDark,
-          ),
-
-          // 2. Notifications & Ezan
+          // 1. Ezan & Vakit Bildirimleri (Unified & Real)
           _buildMockupTile(
             context,
             title: notifLabel,
             subtitle: notifSub,
-            icon: Icons.notifications_active_outlined,
+            icon: Icons.notifications_active_rounded,
             onTap: () => NotificationSettingsSheet.show(context),
             isDark: isDark,
           ),
 
-          // 3. Theme (Active toggle!)
+          // 2. Theme (Active toggle)
           _buildMockupTile(
             context,
             title: themeLabel,
             subtitle: themeSub,
-            icon: Icons.brightness_medium_outlined,
+            icon: isDark ? Icons.dark_mode_rounded : Icons.light_mode_rounded,
             onTap: () => provider.toggleTheme(),
             isDark: isDark,
           ),
 
-          // 4. Backup
-          _buildMockupTile(
-            context,
-            title: backupLabel,
-            subtitle: backupSub,
-            icon: Icons.backup_outlined,
-            onTap: () => _showComingSoonDialog(context, backupLabel, okLabel),
-            isDark: isDark,
-          ),
-
-          // 5. About
+          // 3. Hakkımızda (Beautiful Dialog with Dynamic Version)
           _buildMockupTile(
             context,
             title: aboutLabel,
             subtitle: aboutSub,
-            icon: Icons.info_outline,
-            onTap: () {
-              showAboutDialog(
-                context: context,
-                applicationName: lang == 'tr' ? 'Namazı Öğreniyorum' : lang == 'id' ? 'Belajar Shalat' : lang == 'ru' ? 'Учусь молиться' : lang == 'it' ? 'Impara a pregare' : lang == 'ur' ? 'نماز سیکھیں' : 'Learn to Pray',
-                applicationVersion: '1.0.0',
-                applicationIcon: const Icon(Icons.mosque, color: AppColors.premiumGold, size: 40),
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0),
-                    child: Text(aboutContent),
-                  )
-                ],
-              );
-            },
+            icon: Icons.info_outline_rounded,
+            onTap: () => _showAboutAppDialog(context, lang, isDark),
             isDark: isDark,
           ),
 
-          // 6. Rate
+          // 4. Rate the App (Single Working 5-Star Button)
+          _buildRateAppButton(context, lang, isDark),
+
+          // 5. Gizlilik Politikası (In-App Compliant Dialog)
+          _buildPrivacyPolicyButton(context, lang, isDark),
+
+          // 6. Backup & Restore (Mockup / Cloud feature)
           _buildMockupTile(
             context,
-            title: rateLabel,
-            subtitle: rateSub,
-            icon: Icons.star_border_outlined,
-            onTap: () => _showComingSoonDialog(context, rateLabel, okLabel),
+            title: backupLabel,
+            subtitle: backupSub,
+            icon: Icons.cloud_sync_outlined,
+            onTap: () => _showComingSoonDialog(context, backupLabel, okLabel),
             isDark: isDark,
           ),
 
@@ -304,13 +670,14 @@ class SettingsTab extends StatelessWidget {
             context,
             title: wizardLabel,
             subtitle: wizardSub,
-            icon: Icons.refresh_outlined,
+            icon: Icons.restart_alt_rounded,
             onTap: () {
               showDialog(
                 context: context,
                 builder: (BuildContext ctx) {
                   return AlertDialog(
-                    title: Text(wizardConfirmTitle),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                    title: Text(wizardConfirmTitle, style: const TextStyle(fontWeight: FontWeight.bold)),
                     content: Text(wizardConfirmBody),
                     actions: [
                       TextButton(
@@ -328,7 +695,7 @@ class SettingsTab extends StatelessWidget {
                             ),
                           );
                         },
-                        child: Text(confirmLabel, style: const TextStyle(color: Colors.red)),
+                        child: Text(confirmLabel, style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
                       ),
                     ],
                   );
@@ -337,10 +704,8 @@ class SettingsTab extends StatelessWidget {
             },
             isDark: isDark,
           ),
-          _buildRateAppButton(context, lang, isDark),
-          _buildPrivacyPolicyButton(context, lang, isDark),
-          const SizedBox(height: 30),
 
+          const SizedBox(height: 36),
         ],
       ),
     );
@@ -521,33 +886,219 @@ class SettingsTab extends StatelessWidget {
       ),
     );
   }
+
+  // ──── GORGEOUS CUSTOM ABOUT DIALOG ────
+  void _showAboutAppDialog(BuildContext context, String lang, bool isDark) {
+    final title = lang == 'tr'
+        ? 'Namazı Öğreniyorum'
+        : lang == 'id'
+            ? 'Belajar Shalat'
+            : lang == 'ru'
+                ? 'Учусь молиться'
+                : lang == 'it'
+                    ? 'Impara a pregare'
+                    : lang == 'ur'
+                        ? 'نماز سیکھیں'
+                        : 'Learn Prayer';
+
+    final description = lang == 'tr'
+        ? 'Namaz kılmayı, abdest almayı, namaz dualarını ve surelerini sesli okunuşları ve anlamlarıyla beraber en sade ve doğru biçimde öğreten kapsamlı İslam kılavuzunuz.'
+        : lang == 'de'
+            ? 'Ihre mobile Leitfaden-App, die Ihnen auf einfachste und korrekteste Weise beibringt, wie man betet, Wudu macht und Gebete und Suren mit Aussprache und Bedeutung lernt.'
+            : lang == 'fr'
+                ? 'Votre application guide mobile pour apprendre la prière, les ablutions, et les sourates avec prononciation et signification.'
+                : lang == 'es'
+                    ? 'Su aplicación guía móvil para aprender a rezar, hacer el wudu y aprender las súplicas y suras con pronunciación.'
+                    : lang == 'id'
+                        ? 'Aplikasi panduan seluler Anda untuk belajar shalat, wudhu, dan doa-doa dengan pengucapan dan makna.'
+                        : lang == 'ru'
+                            ? 'Ваше мобильное руководство по обучению намазу, омовению, сурам и дуа с правильным произношением.'
+                            : lang == 'it'
+                                ? 'La tua app guida per imparare a pregare, fare il wudu e conoscere le sure e le preghiere.'
+                                : lang == 'ur'
+                                    ? 'نماز، وضو اور سورتیں سیکھنے کے لیے آپ کی مکمل رہنمائی ایپ۔'
+                                    : 'Your comprehensive mobile guide to learning Islamic prayer, ablution, surahs, and supplications.';
+
+    final features = [
+      lang == 'tr' ? '🕌 5 Vakit & Nafile Namazlar' : '🕌 5 Daily & Sunnah Prayers',
+      lang == 'tr' ? '🔊 Sesli Sureler & Dualar' : '🔊 Audio Surahs & Supplications',
+      lang == 'tr' ? '🧭 Hassas Kıble Pusulası' : '🧭 Accurate Qibla Compass',
+      lang == 'tr' ? '🔔 Ezan Vakti Hatırlatıcıları' : '🔔 Adhan & Prayer Time Alerts',
+      lang == 'tr' ? '📿 Zikirmatik & Esmaül Hüsna' : '📿 Dhikr Counter & Asmaul Husna',
+      lang == 'tr' ? '🌍 9 Farklı Dil Desteği' : '🌍 9 Supported Languages',
+    ];
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: isDark ? const Color(0xFF14242A) : Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 8),
+              // App Icon with glowing circular badge
+              Container(
+                width: 76,
+                height: 76,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.premiumGold.withOpacity(0.15),
+                  border: Border.all(color: AppColors.premiumGold.withOpacity(0.4), width: 1.5),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.premiumGold.withOpacity(0.12),
+                      blurRadius: 16,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                child: const Icon(Icons.mosque_rounded, size: 42, color: AppColors.premiumGold),
+              ),
+              const SizedBox(height: 16),
+
+              // Title
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 0.3,
+                  color: isDark ? Colors.white : AppColors.darkEmerald,
+                ),
+              ),
+              const SizedBox(height: 6),
+
+              // Version Badge
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.emeraldGreen.withOpacity(isDark ? 0.25 : 0.12),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColors.emeraldGreen.withOpacity(0.4), width: 1),
+                ),
+                child: Text(
+                  'v$appVersionName ($appBuildNumber)',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.emeraldGreen,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Description
+              Text(
+                description,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 12.5,
+                  height: 1.45,
+                  color: isDark ? Colors.white70 : Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 18),
+
+              // Feature chips grid
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: isDark ? Colors.white.withOpacity(0.04) : const Color(0xFFF9F7F1),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: AppColors.champagneGold.withOpacity(0.15)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: features.map((f) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 3.5),
+                    child: Row(
+                      children: [
+                        Text(
+                          f,
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: isDark ? Colors.white70 : AppColors.darkEmerald,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )).toList(),
+                ),
+              ),
+              const SizedBox(height: 18),
+
+              // Spiritual note
+              Text(
+                lang == 'tr'
+                    ? 'Dualarınızda bizi de unutmamanız dileğiyle...\nAllah ibadetlerinizi kabul eylesin.'
+                    : 'May Allah accept your prayers and worship.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 11.5,
+                  fontStyle: FontStyle.italic,
+                  color: isDark ? Colors.white54 : Colors.black54,
+                ),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.emeraldGreen,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                elevation: 0,
+              ),
+              onPressed: () => Navigator.pop(ctx),
+              child: Text(
+                lang == 'tr' ? 'Kapat' : 'Close',
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // ──── SINGLE WORKING 5-STAR RATE BUTTON ────
   Widget _buildRateAppButton(BuildContext context, String lang, bool isDark) {
     final isIos = Platform.isIOS;
-    final storeName = isIos ? 'App Store' : 'Play Store';
+    final storeName = isIos ? 'App Store' : 'Google Play';
+
     final rateTitle = lang == 'tr'
-        ? (isIos ? 'Uygulamayı Puanla (App Store)' : 'Uygulamayı Puanla (5 Yıldız Ver)')
+        ? 'Uygulamayı Değerlendir (5 Yıldız Ver ⭐)'
         : lang == 'en'
-            ? (isIos ? 'Rate the App (App Store)' : 'Rate the App (Give 5 Stars)')
+            ? 'Rate the App (Give 5 Stars ⭐)'
             : lang == 'de'
-                ? 'App bewerten ($storeName)'
+                ? 'App bewerten (5 Sterne ⭐)'
                 : lang == 'fr'
-                    ? 'Noter l\'application ($storeName)'
+                    ? 'Noter l\'application (5 étoiles ⭐)'
                     : lang == 'es'
-                        ? 'Calificar la aplicación ($storeName)'
+                        ? 'Calificar la aplicación (5 estrellas ⭐)'
                         : lang == 'id'
-                            ? 'Beri Nilai Aplikasi ($storeName)'
+                            ? 'Beri Nilai Aplikasi (5 Bintang ⭐)'
                             : lang == 'ru'
-                                ? 'Оценить приложение ($storeName)'
+                                ? 'Оценить приложение (5 звезд ⭐)'
                                 : lang == 'it'
-                                    ? 'Valuta l\'app ($storeName)'
+                                    ? 'Valuta l\'app (5 stelle ⭐)'
                                     : lang == 'ur'
-                                        ? 'ایپ کی درجہ بندی کریں ($storeName)'
-                                        : 'Rate the App ($storeName)';
+                                        ? 'ایپ کی درجہ بندی کریں (5 ستارے ⭐)'
+                                        : 'Rate the App (5 Stars ⭐)';
 
     final rateSub = lang == 'tr'
-        ? 'Bize destek olmak için $storeName\'da puan verin.'
+        ? '$storeName üzerinde puan vererek bize destek olun.'
         : lang == 'en'
-            ? 'Support us by rating on the $storeName.'
+            ? 'Support our work by leaving a review on $storeName.'
             : lang == 'de'
                 ? 'Unterstützen Sie uns durch eine Bewertung im $storeName.'
                 : lang == 'fr'
@@ -555,36 +1106,51 @@ class SettingsTab extends StatelessWidget {
                     : lang == 'es'
                         ? 'Apóyanos calificando en $storeName.'
                         : lang == 'id'
-                            ? 'Dukung kami dengan memberi peringkat di $storeName.'
+                            ? 'Dukung kami dengan memberi ulasan di $storeName.'
                             : lang == 'ru'
-                                ? 'Поддержите нас, оценив приложение в $storeName.'
+                                ? 'Поддержите нас отзывом в $storeName.'
                                 : lang == 'it'
-                                    ? 'Supportaci valutando su $storeName.'
+                                    ? 'Supportaci con una recensione su $storeName.'
                                     : lang == 'ur'
-                                        ? '$storeName پر درجہ بندی کرکے ہماری مدد کریں۔'
-                                        : 'Support us by rating on the $storeName.';
-    
+                                        ? '$storeName پر جائزہ دے کر ہماری مدد کریں۔'
+                                        : 'Support us with a review on $storeName.';
+
     return _buildMockupTile(
       context,
       title: rateTitle,
       subtitle: rateSub,
       icon: Icons.star_rate_rounded,
       onTap: () async {
-        final url = isIos
-            ? Uri.parse('https://apps.apple.com/app/namaz%C4%B1-%C3%B6%C4%9Freniyorum/id6737516890')
-            : Uri.parse('https://play.google.com/store/apps/details?id=com.omerkr.namaz_ogreniyorum');
-        try {
-          if (await canLaunchUrl(url)) {
-            await launchUrl(url, mode: LaunchMode.externalApplication);
+        if (isIos) {
+          final iosUrl = Uri.parse('https://apps.apple.com/app/namaz%C4%B1-%C3%B6%C4%9Freniyorum/id$iosAppId');
+          try {
+            await launchUrl(iosUrl, mode: LaunchMode.externalApplication);
+          } catch (e) {
+            debugPrint('Could not launch App Store: $e');
           }
-        } catch (e) {
-          debugPrint('Could not launch $url');
+        } else {
+          final marketUri = Uri.parse('market://details?id=$androidPackageId');
+          final webUri = Uri.parse('https://play.google.com/store/apps/details?id=$androidPackageId');
+          try {
+            if (await canLaunchUrl(marketUri)) {
+              await launchUrl(marketUri, mode: LaunchMode.externalApplication);
+            } else {
+              await launchUrl(webUri, mode: LaunchMode.externalApplication);
+            }
+          } catch (_) {
+            try {
+              await launchUrl(webUri, mode: LaunchMode.externalApplication);
+            } catch (e) {
+              debugPrint('Could not launch Play Store: $e');
+            }
+          }
         }
       },
       isDark: isDark,
     );
   }
 
+  // ──── BEAUTIFUL IN-APP PRIVACY POLICY DIALOG ────
   Widget _buildPrivacyPolicyButton(BuildContext context, String lang, bool isDark) {
     final title = lang == 'tr'
         ? 'Gizlilik Politikası'
@@ -631,18 +1197,145 @@ class SettingsTab extends StatelessWidget {
       title: title,
       subtitle: sub,
       icon: Icons.privacy_tip_outlined,
-      onTap: () async {
-        final url = Uri.parse('https://omerkarabalik.github.io/namaz-ogreniyorum/privacy-policy.html');
-        try {
-          if (await canLaunchUrl(url)) {
-            await launchUrl(url, mode: LaunchMode.externalApplication);
-          }
-        } catch (e) {
-          debugPrint('Could not launch $url');
-        }
-      },
+      onTap: () => _showPrivacyPolicyDialog(context, lang, isDark),
       isDark: isDark,
     );
   }
 
+  void _showPrivacyPolicyDialog(BuildContext context, String lang, bool isDark) {
+    final isTr = lang == 'tr';
+
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: isDark ? const Color(0xFF14242A) : Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 22, vertical: 20),
+        title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: AppColors.emeraldGreen.withOpacity(0.15),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.shield_outlined, color: AppColors.emeraldGreen, size: 22),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                isTr ? 'Gizlilik ve Güvenlik' : 'Privacy & Security',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: isDark ? Colors.white : AppColors.darkEmerald,
+                ),
+              ),
+            ),
+          ],
+        ),
+        content: SizedBox(
+          width: double.maxFinite,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildPrivacySection(
+                  icon: Icons.my_location_rounded,
+                  title: isTr ? '1. Konum Bilgisi (GPS)' : '1. Location Data (GPS)',
+                  body: isTr
+                      ? 'Cihazınızın konumu yalnızca bulunduğunuz yerin namaz vakitlerini ve kıble yönünü doğru hesaplamak amacıyla kullanılır. Konum bilginiz hiçbir sunucuya gönderilmez ve kaydedilmez.'
+                      : 'Your location is used solely to calculate accurate local prayer times and the Qibla direction. It is processed entirely on-device and never stored or shared.',
+                  isDark: isDark,
+                ),
+                const SizedBox(height: 12),
+                _buildPrivacySection(
+                  icon: Icons.notifications_none_rounded,
+                  title: isTr ? '2. Bildirimler ve Alarmlar' : '2. Notifications & Alarms',
+                  body: isTr
+                      ? 'Ezan vakti bildirimleri cihazınızın yerel sistem alarmları üzerinden çalışır. İnternet bağlantısına ihtiyaç duymaz.'
+                      : 'Adhan and prayer alerts run locally on your device\'s alarm system and do not require external cloud sync.',
+                  isDark: isDark,
+                ),
+                const SizedBox(height: 12),
+                _buildPrivacySection(
+                  icon: Icons.person_off_outlined,
+                  title: isTr ? '3. Kişisel Veriler' : '3. Personal Data',
+                  body: isTr
+                      ? 'Uygulamamız üyelik veya hesap oluşturma gerektirmez. Ad, soyad, telefon veya e-posta gibi hiçbir kişisel veriniz toplanmaz.'
+                      : 'The app requires no account creation or login. No personal identifying information (name, email, or phone) is ever collected.',
+                  isDark: isDark,
+                ),
+                const SizedBox(height: 12),
+                _buildPrivacySection(
+                  icon: Icons.ads_click_rounded,
+                  title: isTr ? '4. Reklamlar' : '4. Advertisements',
+                  body: isTr
+                      ? 'Uygulamanın ücretsiz sunulabilmesi için Google AdMob standart reklam ilkelerine uygun reklamlar gösterilir.'
+                      : 'To keep the application free, standard non-intrusive advertisements are served via Google AdMob adhering to Google policies.',
+                  isDark: isDark,
+                ),
+              ],
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(
+              isTr ? 'Anladım' : 'Got It',
+              style: const TextStyle(color: AppColors.emeraldGreen, fontWeight: FontWeight.bold, fontSize: 15),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPrivacySection({
+    required IconData icon,
+    required String title,
+    required String body,
+    required bool isDark,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: isDark ? Colors.white.withOpacity(0.04) : const Color(0xFFFBF9F4),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: AppColors.champagneGold.withOpacity(0.12)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, size: 16, color: AppColors.premiumGold),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 12.5,
+                    fontWeight: FontWeight.bold,
+                    color: isDark ? Colors.white : AppColors.darkEmerald,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            body,
+            style: TextStyle(
+              fontSize: 11.5,
+              height: 1.4,
+              color: isDark ? Colors.white70 : Colors.black87,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
