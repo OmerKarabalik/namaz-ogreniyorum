@@ -1,4 +1,4 @@
-import '../models/prayer_models.dart';
+﻿import '../models/prayer_models.dart';
 
 class PrayerDatabaseUr {
   // --- SURAHS AND PRAYERS ---
@@ -1323,15 +1323,15 @@ class PrayerDatabaseUr {
           description: '',
         ));
       } else if (mezhep != Mezhep.maliki) {
-        list.add(all.firstWhere((element) => element.name == 'سبحانک'));
+        list.add(all.firstWhere((element) => element.audioFileName == 'subhaneke.mp3'));
       }
     } else if (isIkindiYatsi && rekat == 3) {
       if (mezhep == Mezhep.hanafi || mezhep == Mezhep.hanbali) {
-        list.add(all.firstWhere((element) => element.name == 'سبحانک'));
+        list.add(all.firstWhere((element) => element.audioFileName == 'subhaneke.mp3'));
       }
     }
 
-    list.add(all.firstWhere((element) => element.name.contains('الفاتحہ')));
+    list.add(all.firstWhere((element) => element.audioFileName == 'fatiha.mp3'));
 
     bool readZamm = !isFarz || rekat <= 2;
     if (readZamm) {
@@ -1345,14 +1345,14 @@ class PrayerDatabaseUr {
     final all = getDuaSurahs();
     if (isLast) {
       return [
-        all.firstWhere((element) => element.name == 'التحیات'),
-        all.firstWhere((element) => element.name == 'درود ابراہیمی (صل)'),
-        all.firstWhere((element) => element.name == 'درود ابراہیمی (بارک)'),
-        all.firstWhere((element) => element.name.contains('ربنا')),
+        all.firstWhere((element) => element.audioFileName == 'ettehiyyatu.mp3'),
+        all.firstWhere((element) => element.audioFileName == 'salli.mp3'),
+        all.firstWhere((element) => element.audioFileName == 'barik.mp3'),
+        all.firstWhere((element) => element.audioFileName == 'rabbena.mp3'),
       ];
     } else {
       return [
-        all.firstWhere((element) => element.name == 'التحیات'),
+        all.firstWhere((element) => element.audioFileName == 'ettehiyyatu.mp3'),
       ];
     }
   }
