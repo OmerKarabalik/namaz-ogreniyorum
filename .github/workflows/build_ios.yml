@@ -76,7 +76,8 @@ jobs:
 
           # 9. Install Provisioning Profile
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/8B9LU3D5PV.mobileprovision
+          cp profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/a12e0b72-ca77-4e96-9d75-ad65b7ff6e21.mobileprovision
+          cp profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/K3C4QFTVN9.mobileprovision
           cp profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/com.omrkr.namaz.ogreniyorum.app.mobileprovision
 
           # 10. Generate ExportOptions.plist
