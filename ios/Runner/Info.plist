@@ -84,6 +84,10 @@
 	<!-- Google AdMob iOS Yapılandırması -->
 	<key>GADApplicationIdentifier</key>
 	<string>ca-app-pub-5160530830178108~8821603182</string>
+	<key>GADDelayAppMeasurementInit</key>
+	<true/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>İlgi alanlarınıza uygun ve kişiselleştirilmiş reklamlar gösterebilmemiz için uygulama etkinliğinizi izleme izninize ihtiyaç duyulmaktadır.</string>
 	<key>SKAdNetworkItems</key>
 	<array>
 		<dict>

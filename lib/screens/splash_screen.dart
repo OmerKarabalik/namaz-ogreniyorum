@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/theme.dart';
 import '../providers/app_provider.dart';
+import '../services/ad_service.dart';
 import '../services/location_service.dart';
 import '../services/notification_service.dart';
 import '../widgets/location_selection_sheet.dart';
@@ -24,6 +25,9 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      AdService.initialize();
+    });
     _checkFirstLaunch();
   }
 
@@ -36,6 +40,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
       if (setupDone) {
         final initialPayload = await NotificationService.checkInitialNotification();
+        await AdService.initialize();
+        if (!mounted) return;
+
         if (initialPayload != null && initialPayload.startsWith('adhan_')) {
           if (mounted && !_navigated) {
             _navigated = true;
@@ -71,21 +78,23 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _handleStartTap(AppProvider appProvider) async {
+    await AdService.initialize();
+    if (!mounted) return;
     // Show location selection sheet on first launch so user can choose GPS or world city
     await LocationSelectionSheet.show(context);
-    _proceedToMainApp(appProvider);
+    await _proceedToMainApp(appProvider);
   }
 
   Future<void> _proceedToMainApp(AppProvider appProvider) async {
     if (_navigated) return;
+    await AdService.initialize();
+    if (!mounted || _navigated) return;
     _navigated = true;
 
     // Do NOT set setupCompleted here; HomeScreen's wizard will complete it after Language, Mezhep, and Gender!
-    if (mounted) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const MainLayout()),
-      );
-    }
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const MainLayout()),
+    );
   }
 
   @override

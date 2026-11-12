@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'constants/theme.dart';
 import 'providers/app_provider.dart';
 import 'screens/splash_screen.dart';
-import 'services/ad_service.dart';
 import 'services/notification_service.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -19,15 +18,6 @@ void main() async {
     debugPrint('NotificationService initialization warning: $e');
   }
 
-  // Initialize AdMob asynchronously in the background so it never delays startup or causes ANR
-  Future.microtask(() async {
-    try {
-      await AdService.initialize();
-    } catch (e) {
-      debugPrint('AdService initialization warning: $e');
-    }
-  });
-  
   runApp(
     ChangeNotifierProvider(
       create: (_) => AppProvider(),

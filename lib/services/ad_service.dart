@@ -1,3 +1,4 @@
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -24,15 +25,50 @@ class AdService {
   static InterstitialAd? _interstitialAd;
   static bool _isInterstitialAdLoading = false;
   static DateTime? _lastInterstitialShowTime;
+  static bool _nonPersonalizedAds = false;
+  static Future<void>? _initFuture;
 
-  /// Reklam SDK'sını başlatır
-  static Future<void> initialize() async {
+  /// iOS'ta ATT iznini istedikten sonra Reklam SDK'sını başlatır (tek seferlik, idempotent)
+  static Future<void> initialize() {
+    _initFuture ??= _initializeInternal();
+    return _initFuture!;
+  }
+
+  static Future<void> _initializeInternal() async {
+    try {
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+        final currentStatus =
+            await AppTrackingTransparency.trackingAuthorizationStatus;
+        if (currentStatus == TrackingStatus.notDetermined) {
+          // iOS 15+ ve iPadOS sahnesi tam aktif olmadan ATT diyaloğu görünmeyebilir
+          await Future.delayed(const Duration(milliseconds: 700));
+          final requestedStatus =
+              await AppTrackingTransparency.requestTrackingAuthorization();
+          _nonPersonalizedAds = requestedStatus != TrackingStatus.authorized;
+        } else {
+          _nonPersonalizedAds = currentStatus != TrackingStatus.authorized;
+        }
+      }
+    } catch (e) {
+      debugPrint('ATT initialization warning (handled): $e');
+      if (defaultTargetPlatform == TargetPlatform.iOS) {
+        _nonPersonalizedAds = true;
+      }
+    }
+
     try {
       await MobileAds.instance.initialize();
       loadInterstitialAd();
     } catch (e) {
       debugPrint('AdMob initialization error (handled): $e');
     }
+  }
+
+  static AdRequest _buildAdRequest() {
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
+      return AdRequest(nonPersonalizedAds: _nonPersonalizedAds);
+    }
+    return const AdRequest();
   }
 
   /// Banner Reklam oluşturur ve yükler
@@ -46,7 +82,7 @@ class AdService {
       return BannerAd(
         adUnitId: bannerAdUnitId,
         size: AdSize.banner,
-        request: const AdRequest(),
+        request: _buildAdRequest(),
         listener: BannerAdListener(
           onAdLoaded: (ad) {
             debugPrint('AdMob: Banner reklam basariyla yuklendi.');
@@ -74,7 +110,7 @@ class AdService {
     try {
       InterstitialAd.load(
         adUnitId: interstitialAdUnitId,
-        request: const AdRequest(),
+        request: _buildAdRequest(),
         adLoadCallback: InterstitialAdLoadCallback(
           onAdLoaded: (ad) {
             debugPrint('AdMob: Gecis reklami basariyla yuklendi.');
