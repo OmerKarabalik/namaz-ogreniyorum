@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/theme.dart';
 import '../data/prayer_database.dart';
@@ -57,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
         final provider = Provider.of<AppProvider>(context, listen: false);
         
         final isEnabled = await NotificationService.areNotificationsEnabled();
-        if (!isEnabled || (!hasAsked && setupCompleted)) {
+        if (setupCompleted && (!isEnabled || !hasAsked)) {
           await prefs.setBool('has_prompted_notif_perm', true);
           await NotificationService.requestPermissions();
         }

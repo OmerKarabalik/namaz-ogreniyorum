@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/theme.dart';
 import '../providers/app_provider.dart';
 import '../services/ad_service.dart';
-import '../services/location_service.dart';
 import '../services/notification_service.dart';
-import '../widgets/location_selection_sheet.dart';
 import 'main_layout.dart';
 import 'adhan_playing_screen.dart';
 
@@ -80,8 +77,6 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _handleStartTap(AppProvider appProvider) async {
     await AdService.initialize();
     if (!mounted) return;
-    // Show location selection sheet on first launch so user can choose GPS or world city
-    await LocationSelectionSheet.show(context);
     await _proceedToMainApp(appProvider);
   }
 
